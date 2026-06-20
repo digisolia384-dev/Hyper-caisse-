@@ -864,8 +864,110 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 }
 
 /* ══════════════════════════════════════════════
-   STATS HEBDOMADAIRES — Design carte par jour
+   MODULE RAPPORTS — CSS complet
    ══════════════════════════════════════════════ */
+
+/* Nav onglets rapports */
+.rpt-tabs{display:flex;gap:6px;margin-bottom:20px;background:var(--surface2);border-radius:var(--r);padding:5px;border:1px solid var(--border)}
+.rpt-tab{flex:1;padding:9px 6px;border-radius:var(--rsm);font-size:.8rem;font-weight:700;cursor:pointer;text-align:center;border:none;background:transparent;color:var(--text-muted);transition:all .18s}
+.rpt-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(232,115,12,.35)}
+
+/* Navigation semaine */
+.rpt-week-nav{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.rpt-week-nav button{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rsm);padding:7px 12px;cursor:pointer;color:var(--text);font-size:.82rem;transition:all .15s}
+.rpt-week-nav button:hover{border-color:var(--accent);color:var(--accent)}
+.rpt-week-nav button:disabled{opacity:.35;cursor:not-allowed}
+.rpt-week-lbl{flex:1;text-align:center;font-weight:700;font-size:.88rem;color:var(--text)}
+.rpt-week-sub{font-size:.72rem;color:var(--text-muted);font-weight:400}
+
+/* KPI row */
+.rpt-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.rpt-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 12px;text-align:center}
+.rpt-kpi-val{font-family:var(--fh);font-weight:800;font-size:1.05rem;margin-bottom:3px}
+.rpt-kpi-lbl{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.rpt-kpi.ca  .rpt-kpi-val{color:var(--accent)}
+.rpt-kpi.mar .rpt-kpi-val{color:#2ECC71}
+.rpt-kpi.dep .rpt-kpi-val{color:#E74C3C}
+.rpt-kpi.nb  .rpt-kpi-val{color:var(--text)}
+
+/* Tableau jours */
+.rpt-table-wrap{overflow-x:auto;margin-bottom:16px}
+.rpt-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.rpt-table th{background:var(--surface2);color:var(--text-muted);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.rpt-table td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.rpt-table tr:last-child td{border-bottom:none}
+.rpt-table tr.today-row td{background:rgba(232,115,12,.05)}
+.rpt-table tr.empty-row td{opacity:.4}
+.rpt-table tr.total-row td{background:var(--surface2);font-weight:700;border-top:2px solid var(--border)}
+.rpt-table tr:hover:not(.total-row) td{background:rgba(255,255,255,.02)}
+.rpt-day-name{font-weight:700;color:var(--text)}
+.rpt-today-badge{font-size:.58rem;background:var(--accent);color:#fff;padding:1px 5px;border-radius:100px;margin-left:5px;vertical-align:middle}
+.rpt-ca{color:var(--accent);font-weight:700;font-family:var(--fh)}
+.rpt-dep{color:#E74C3C;font-weight:600}
+.rpt-mar{font-weight:700}
+.rpt-mar.pos{color:#2ECC71}
+.rpt-mar.neg{color:#E74C3C}
+.rpt-mar.zero{color:var(--text-muted)}
+.rpt-pct{font-size:.7rem;color:var(--text-dim)}
+
+/* Barre mini sparkline inline */
+.rpt-bar-cell{width:80px}
+.rpt-bar-bg{background:rgba(255,255,255,.06);border-radius:3px;height:6px;overflow:hidden}
+.rpt-bar-fill{height:6px;border-radius:3px;background:var(--accent);transition:width .4s ease}
+
+/* Actions toolbar */
+.rpt-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+
+/* Vue mensuelle */
+.rpt-month-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.rpt-week-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .18s}
+.rpt-week-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.rpt-week-card.current-week{border-color:rgba(232,115,12,.4);background:rgba(232,115,12,.04)}
+.rpt-wc-label{font-size:.7rem;color:var(--text-muted);margin-bottom:6px;font-weight:700;text-transform:uppercase}
+.rpt-wc-ca{font-family:var(--fh);font-weight:800;font-size:1rem;color:var(--accent);margin-bottom:4px}
+.rpt-wc-mar{font-size:.78rem;font-weight:700}
+.rpt-wc-mar.pos{color:#2ECC71}
+.rpt-wc-mar.neg{color:#E74C3C}
+.rpt-wc-nb{font-size:.72rem;color:var(--text-muted);margin-top:3px}
+
+/* Vue annuelle */
+.rpt-year-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:20px}
+.rpt-month-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rsm);padding:12px 10px;text-align:center}
+.rpt-month-card.has-data{border-color:rgba(232,115,12,.2)}
+.rpt-mc-name{font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase}
+.rpt-mc-ca{font-family:var(--fh);font-weight:800;font-size:.88rem;color:var(--accent)}
+.rpt-mc-mar{font-size:.7rem;font-weight:700}
+
+/* Rapport PIN lock */
+.rpt-locked{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px;text-align:center;gap:12px}
+.rpt-locked .lock-ico{font-size:3rem}
+.rpt-locked h3{font-size:1.1rem;font-weight:800}
+.rpt-locked p{font-size:.83rem;color:var(--text-muted);max-width:280px}
+
+/* Print styles pour PDF */
+@media print {
+  body > *:not(#rpt-print-area){display:none !important}
+  #rpt-print-area{display:block !important;font-family:Arial,sans-serif;font-size:11pt;color:#000;background:#fff}
+  .rpt-print-header{text-align:center;border-bottom:2px solid #E8730C;padding-bottom:12px;margin-bottom:16px}
+  .rpt-print-logo{max-height:52px;margin-bottom:6px}
+  .rpt-print-title{font-size:14pt;font-weight:800;color:#E8730C;margin-bottom:3px}
+  .rpt-print-sub{font-size:9pt;color:#666}
+  .rpt-print-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+  .rpt-print-table th{background:#f5f5f5;padding:7px 10px;text-align:left;font-size:9pt;border:1px solid #ddd}
+  .rpt-print-table td{padding:7px 10px;border:1px solid #ddd;font-size:10pt}
+  .rpt-print-table tr:last-child td{background:#FFF3E0;font-weight:700}
+  .rpt-print-kpi{display:flex;gap:16px;margin-bottom:14px}
+  .rpt-print-kpi-item{flex:1;border:1px solid #ddd;border-radius:6px;padding:10px;text-align:center}
+  .rpt-print-footer{text-align:center;font-size:8pt;color:#999;border-top:1px solid #ddd;padding-top:8px;margin-top:16px}
+  .no-print{display:none !important}
+}
+
+@media(max-width:600px){
+  .rpt-kpi-row{grid-template-columns:1fr 1fr}
+  .rpt-month-grid{grid-template-columns:1fr 1fr}
+  .rpt-year-grid{grid-template-columns:repeat(3,1fr)}
+  .rpt-table th:nth-child(5),.rpt-table td:nth-child(5){display:none}
+}
 .week-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:24px;box-shadow:var(--card-shadow)}
 .week-panel-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;flex-wrap:wrap;gap:8px}
 .week-panel-hdr h4{font-size:.95rem;font-weight:700;margin:0}
@@ -1543,6 +1645,7 @@ async function _fbSyncAll(data) {
       <button class="ni" onclick="reqPin('stock')"     data-s="stock">    <span class="ni-ico">🏭</span><span class="nl">Gestion Stock</span><span class="ni-lock">🔒</span></button>
       <button class="ni" onclick="reqPin('clients')"   data-s="clients">  <span class="ni-ico">👥</span><span class="nl">Clients</span><span class="ni-lock">🔒</span></button>
       <button class="ni" onclick="reqPin('sales')"     data-s="sales">    <span class="ni-ico">🧾</span><span class="nl">Ventes</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="openRapports()"      data-s="rapports"> <span class="ni-ico">📈</span><span class="nl">Rapports</span><span class="ni-lock">🔒</span></button>
       <button class="ni" onclick="reqPin('settings')"  data-s="settings"> <span class="ni-ico">⚙️</span><span class="nl">Paramètres</span><span class="ni-lock">🔒</span></button>
     </nav>
     <div class="sb-foot">
@@ -1744,6 +1847,102 @@ async function _fbSyncAll(data) {
         <button class="fmt-btn" id="srv-tab-all" onclick="setSrvTab('all',this)">📋 Toutes</button>
       </div>
       <div id="srv-orders-list"><p class="empty">Aucune commande en attente.</p></div>
+    </section>
+
+    <!-- ═══════════════════════ RAPPORTS ═══════════════════════ -->
+    <section id="s-rapports" class="section">
+
+      <!-- Toolbar actions -->
+      <div class="rpt-toolbar no-print">
+        <button class="btn-g sm" onclick="rptExportCSV()">📥 Export CSV</button>
+        <button class="btn-g sm" onclick="rptPrint()">🖨️ Imprimer / PDF</button>
+        <button class="btn-g sm" onclick="rptArchiveNow()" title="Forcer archivage maintenant">🗄️ Archiver</button>
+        <div style="margin-left:auto;font-size:.75rem;color:var(--text-muted)" id="rpt-archive-info"></div>
+      </div>
+
+      <!-- Onglets vue -->
+      <div class="rpt-tabs no-print">
+        <button class="rpt-tab active" id="rpt-tab-week"  onclick="setRptView('week',this)">📅 Semaine</button>
+        <button class="rpt-tab"        id="rpt-tab-month" onclick="setRptView('month',this)">📆 Mensuel</button>
+        <button class="rpt-tab"        id="rpt-tab-year"  onclick="setRptView('year',this)">🏆 Annuel</button>
+      </div>
+
+      <!-- Vue SEMAINE -->
+      <div id="rpt-view-week">
+        <!-- Navigation -->
+        <div class="rpt-week-nav no-print">
+          <button onclick="rptWeekNav(-1)" id="rpt-prev-btn">◀ Précédente</button>
+          <div class="rpt-week-lbl" id="rpt-week-lbl">
+            <div id="rpt-week-title">—</div>
+            <div class="rpt-week-sub" id="rpt-week-range">—</div>
+          </div>
+          <button onclick="rptWeekNav(1)" id="rpt-next-btn">Suivante ▶</button>
+        </div>
+        <!-- KPIs semaine -->
+        <div class="rpt-kpi-row" id="rpt-kpi-week">
+          <div class="rpt-kpi ca"><div class="rpt-kpi-val" id="rpt-kv-ca">—</div><div class="rpt-kpi-lbl">Chiffre d'affaires</div></div>
+          <div class="rpt-kpi dep"><div class="rpt-kpi-val" id="rpt-kv-dep">—</div><div class="rpt-kpi-lbl">Dépenses</div></div>
+          <div class="rpt-kpi mar"><div class="rpt-kpi-val" id="rpt-kv-mar">—</div><div class="rpt-kpi-lbl">Marge brute</div></div>
+          <div class="rpt-kpi nb"><div class="rpt-kpi-val" id="rpt-kv-nb">—</div><div class="rpt-kpi-lbl">Ventes</div></div>
+        </div>
+        <!-- Tableau jours -->
+        <div class="rpt-table-wrap">
+          <table class="rpt-table" id="rpt-week-table">
+            <thead>
+              <tr>
+                <th>Jour</th>
+                <th>Chiffre d'affaires</th>
+                <th>Dépenses</th>
+                <th>Marge brute</th>
+                <th>Marge %</th>
+                <th>Ventes</th>
+                <th class="rpt-bar-cell">Tendance</th>
+              </tr>
+            </thead>
+            <tbody id="rpt-week-tbody">
+              <tr><td colspan="7" class="empty">Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Top produits semaine -->
+        <div id="rpt-week-top" style="margin-top:8px"></div>
+      </div>
+
+      <!-- Vue MENSUELLE -->
+      <div id="rpt-view-month" style="display:none">
+        <div class="rpt-week-nav no-print">
+          <button onclick="rptMonthNav(-1)">◀ Mois précédent</button>
+          <div class="rpt-week-lbl"><div id="rpt-month-title">—</div></div>
+          <button onclick="rptMonthNav(1)" id="rpt-month-next">Mois suivant ▶</button>
+        </div>
+        <div class="rpt-kpi-row" id="rpt-kpi-month">
+          <div class="rpt-kpi ca"><div class="rpt-kpi-val" id="rpt-mv-ca">—</div><div class="rpt-kpi-lbl">CA du mois</div></div>
+          <div class="rpt-kpi dep"><div class="rpt-kpi-val" id="rpt-mv-dep">—</div><div class="rpt-kpi-lbl">Dépenses</div></div>
+          <div class="rpt-kpi mar"><div class="rpt-kpi-val" id="rpt-mv-mar">—</div><div class="rpt-kpi-lbl">Marge</div></div>
+          <div class="rpt-kpi nb"><div class="rpt-kpi-val" id="rpt-mv-nb">—</div><div class="rpt-kpi-lbl">Ventes</div></div>
+        </div>
+        <div class="rpt-month-grid" id="rpt-month-weeks"></div>
+      </div>
+
+      <!-- Vue ANNUELLE -->
+      <div id="rpt-view-year" style="display:none">
+        <div class="rpt-week-nav no-print">
+          <button onclick="rptYearNav(-1)">◀</button>
+          <div class="rpt-week-lbl"><div id="rpt-year-title">—</div></div>
+          <button onclick="rptYearNav(1)" id="rpt-year-next">▶</button>
+        </div>
+        <div class="rpt-kpi-row">
+          <div class="rpt-kpi ca"><div class="rpt-kpi-val" id="rpt-yv-ca">—</div><div class="rpt-kpi-lbl">CA annuel</div></div>
+          <div class="rpt-kpi dep"><div class="rpt-kpi-val" id="rpt-yv-dep">—</div><div class="rpt-kpi-lbl">Dépenses</div></div>
+          <div class="rpt-kpi mar"><div class="rpt-kpi-val" id="rpt-yv-mar">—</div><div class="rpt-kpi-lbl">Marge</div></div>
+          <div class="rpt-kpi nb"><div class="rpt-kpi-val" id="rpt-yv-nb">—</div><div class="rpt-kpi-lbl">Ventes</div></div>
+        </div>
+        <div class="rpt-year-grid" id="rpt-year-months"></div>
+      </div>
+
+      <!-- Zone d'impression cachée -->
+      <div id="rpt-print-area" style="display:none"></div>
+
     </section>
 
     <!-- CAISSE -->
@@ -2057,6 +2256,29 @@ async function _fbSyncAll(data) {
       <div id="srv-links-list"></div>
     </div>
     <div class="mftr"><button class="btn-g" onclick="closeMo('mo-srv-links')">Fermer</button></div>
+  </div>
+</div>
+
+<!-- MODAL PIN RAPPORTS -->
+<div id="mo-rpt-pin" class="mo hidden" onclick="closeMoOv(event,'mo-rpt-pin')">
+  <div class="modal" style="max-width:340px">
+    <div class="mhdr"><h3>🔒 Accès Rapports</h3><button class="mcls" onclick="closeMo('mo-rpt-pin')">✕</button></div>
+    <div class="mbody" style="padding:24px 20px">
+      <p style="font-size:.83rem;color:var(--text-muted);text-align:center;margin-bottom:4px">PIN propriétaire requis pour accéder aux rapports</p>
+      <div class="pin-dots" id="rpt-pin-dots">
+        <div class="pin-dot" id="rpd-0"></div><div class="pin-dot" id="rpd-1"></div>
+        <div class="pin-dot" id="rpd-2"></div><div class="pin-dot" id="rpd-3"></div>
+      </div>
+      <div class="pin-err" id="rpt-pin-err"></div>
+      <div class="pin-pad">
+        <button class="pin-key" onclick="rptPinKey('1')">1</button><button class="pin-key" onclick="rptPinKey('2')">2</button><button class="pin-key" onclick="rptPinKey('3')">3</button>
+        <button class="pin-key" onclick="rptPinKey('4')">4</button><button class="pin-key" onclick="rptPinKey('5')">5</button><button class="pin-key" onclick="rptPinKey('6')">6</button>
+        <button class="pin-key" onclick="rptPinKey('7')">7</button><button class="pin-key" onclick="rptPinKey('8')">8</button><button class="pin-key" onclick="rptPinKey('9')">9</button>
+        <button class="pin-key" onclick="rptPinKey('clear')" style="color:var(--danger)">✕</button>
+        <button class="pin-key" onclick="rptPinKey('0')">0</button>
+        <button class="pin-key" onclick="rptPinKey('back')">⌫</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -3412,7 +3634,7 @@ function showSection(name) {
   document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
   document.getElementById('s-' + name)?.classList.add('active');
   document.querySelector('[data-s="' + name + '"]')?.classList.add('active');
-  const titles = {dashboard:'Dashboard',pos:'Point de Vente',quick:'Vente Rapide',serveurs:'Commandes Serveurs',caisse:'Caisse',products:'Produits',stock:'Gestion Stock',clients:'Clients',sales:'Ventes',settings:'Paramètres'};
+  const titles = {dashboard:'Dashboard',pos:'Point de Vente',quick:'Vente Rapide',serveurs:'Commandes Serveurs',caisse:'Caisse',products:'Produits',stock:'Gestion Stock',clients:'Clients',sales:'Ventes',rapports:'📈 Rapports',settings:'Paramètres'};
   document.getElementById('tb-title').textContent = titles[name] || name;
   // Update expiry warning in topbar
   const curM = Auth.current();
@@ -3425,7 +3647,7 @@ function showSection(name) {
     }
   }
   document.getElementById('sidebar').classList.remove('mob-open');
-  ({dashboard:renderDashboard,pos:renderPOS,quick:renderQuick,serveurs:()=>{renderSrvOrders();startSrvPoll();},caisse:renderCaisse,products:renderProducts,stock:renderStock,clients:renderClients,sales:renderSales,settings:renderSettings,mysales:renderMySales})[name]?.();
+  ({dashboard:renderDashboard,pos:renderPOS,quick:renderQuick,serveurs:()=>{renderSrvOrders();startSrvPoll();},caisse:renderCaisse,products:renderProducts,stock:renderStock,clients:renderClients,sales:renderSales,rapports:renderRapports,settings:renderSettings,mysales:renderMySales})[name]?.();
   if(name!=='serveurs') stopSrvPoll();
   if (typeof updateSubTicker === 'function') updateSubTicker();
 }
@@ -3597,7 +3819,551 @@ function renderDashboard() {
 
 // ── ANALYSE HEBDOMADAIRE ──────────────────────────────────────────────────────
 
-// ── STATS HEBDO — PIN ─────────────────────────────────────────────────────────
+// ╔══════════════════════════════════════════════════════════════╗
+// ║   MODULE RAPPORTS — Hebdo / Mensuel / Annuel               ║
+// ║   Conservation 1 an · CSV · PDF · PIN · Archivage          ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+// ── État global ──────────────────────────────────────────────────
+let _rptUnlocked   = false;
+let _rptPinEntry   = '';
+let _rptView       = 'week';
+let _rptWeekOffset = 0;   // 0 = semaine courante, -1 = précédente…
+let _rptMonthOffset= 0;
+let _rptYearOffset = 0;
+
+// ── Ouverture avec PIN ────────────────────────────────────────────
+function openRapports() {
+  const m = Auth.current(); if (!m) return;
+  const cfg = getConfig();
+  if (_rptUnlocked) { showSection('rapports'); return; }
+  if (!cfg.pin) { _rptUnlocked = true; showSection('rapports'); renderRapports(); return; }
+  _rptPinEntry = '';
+  _rptRenderDots();
+  document.getElementById('rpt-pin-err').textContent = '';
+  document.getElementById('mo-rpt-pin').classList.remove('hidden');
+}
+
+function rptPinKey(k) {
+  const cfg = getConfig();
+  if (k === 'clear') { _rptPinEntry = ''; }
+  else if (k === 'back') { _rptPinEntry = _rptPinEntry.slice(0,-1); }
+  else if (_rptPinEntry.length < 4) { _rptPinEntry += k; }
+  _rptRenderDots();
+  if (_rptPinEntry.length === 4) {
+    if (_rptPinEntry === (cfg.pin || '')) {
+      _rptUnlocked = true;
+      closeMo('mo-rpt-pin');
+      showSection('rapports');
+      renderRapports();
+      clearTimeout(window._rptLockTimer);
+      window._rptLockTimer = setTimeout(() => { _rptUnlocked = false; }, 15 * 60 * 1000);
+    } else {
+      document.getElementById('rpt-pin-err').textContent = '❌ PIN incorrect';
+      _rptPinEntry = '';
+      setTimeout(() => { _rptRenderDots(); document.getElementById('rpt-pin-err').textContent = ''; }, 900);
+    }
+  }
+}
+
+function _rptRenderDots() {
+  for (let i = 0; i < 4; i++) {
+    const d = document.getElementById('rpd-' + i);
+    if (d) d.className = 'pin-dot' + (_rptPinEntry.length > i ? ' filled' : '');
+  }
+}
+
+// ── Calcul données ────────────────────────────────────────────────
+function _getMondayOf(weekOffset) {
+  const now   = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dow   = today.getDay();
+  const diff  = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(today);
+  monday.setDate(monday.getDate() + diff + weekOffset * 7);
+  return monday;
+}
+
+function _computeWeek(weekOffset) {
+  const m      = Auth.current(); if (!m) return null;
+  const sales  = DB.forM('sales', m.id).filter(s => s.statut !== 'cancelled');
+  const prods  = DB.forM('products', m.id);
+  const dev    = getConfig().devise || 'FCFA';
+  const prodMap = {};
+  prods.forEach(p => { prodMap[p.id] = p; });
+
+  const monday = _getMondayOf(weekOffset);
+  const days   = Array.from({length:7}, (_, i) => {
+    const d = new Date(monday); d.setDate(monday.getDate() + i);
+    return { date: d, ca: 0, dep: 0, nb: 0, items: {} };
+  });
+
+  sales.forEach(sale => {
+    const sd    = new Date(sale.created_at);
+    const sDate = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate());
+    const diff  = Math.round((sDate - monday) / 86400000);
+    if (diff < 0 || diff > 6) return;
+    days[diff].ca += sale.total || 0;
+    days[diff].nb += 1;
+    (sale.items || []).forEach(item => {
+      const p = prodMap[item.pid] || prods.find(x => x.nom === item.nom);
+      if (p && p.prix_achat != null) days[diff].dep += p.prix_achat * (item.qty || 1);
+      const key = item.nom;
+      if (!days[diff].items[key]) days[diff].items[key] = {qty:0, ca:0};
+      days[diff].items[key].qty += (item.qty||1);
+      days[diff].items[key].ca  += item.prix * (item.qty||1);
+    });
+  });
+  return { days, dev, monday };
+}
+
+function _computeMonth(monthOffset) {
+  const now   = new Date();
+  const target = new Date(now.getFullYear(), now.getMonth() + monthOffset, 1);
+  const year   = target.getFullYear(), month = target.getMonth();
+  const m      = Auth.current(); if (!m) return null;
+  const sales  = DB.forM('sales', m.id).filter(s => s.statut !== 'cancelled');
+  const prods  = DB.forM('products', m.id);
+  const prodMap = {}; prods.forEach(p => { prodMap[p.id] = p; });
+  const dev    = getConfig().devise || 'FCFA';
+
+  // 4-5 semaines du mois
+  const firstDay = new Date(year, month, 1);
+  const lastDay  = new Date(year, month + 1, 0);
+  // Trouver le lundi de la première semaine du mois
+  const fdow = firstDay.getDay();
+  const startMon = new Date(firstDay);
+  startMon.setDate(firstDay.getDate() - (fdow === 0 ? 6 : fdow - 1));
+
+  const weeks = [];
+  let cur = new Date(startMon);
+  while (cur <= lastDay) {
+    const wStart = new Date(cur);
+    const wEnd   = new Date(cur); wEnd.setDate(cur.getDate() + 6);
+    weeks.push({ start: new Date(wStart), end: new Date(wEnd), ca:0, dep:0, nb:0 });
+    cur.setDate(cur.getDate() + 7);
+  }
+
+  sales.forEach(sale => {
+    const sd = new Date(sale.created_at);
+    const sd2 = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate());
+    if (sd2.getFullYear() !== year || sd2.getMonth() !== month) return;
+    const wi = weeks.findIndex(w => sd2 >= w.start && sd2 <= w.end);
+    if (wi === -1) return;
+    weeks[wi].ca += sale.total || 0;
+    weeks[wi].nb += 1;
+    (sale.items||[]).forEach(item => {
+      const p = prodMap[item.pid] || prods.find(x => x.nom === item.nom);
+      if (p && p.prix_achat != null) weeks[wi].dep += p.prix_achat * (item.qty||1);
+    });
+  });
+  return { weeks, year, month, dev, target };
+}
+
+function _computeYear(yearOffset) {
+  const year = new Date().getFullYear() + yearOffset;
+  const m    = Auth.current(); if (!m) return null;
+  const sales = DB.forM('sales', m.id).filter(s => s.statut !== 'cancelled');
+  const prods = DB.forM('products', m.id);
+  const prodMap = {}; prods.forEach(p => { prodMap[p.id] = p; });
+  const dev  = getConfig().devise || 'FCFA';
+
+  const months = Array.from({length:12}, (_, i) => ({month:i, ca:0, dep:0, nb:0}));
+  sales.forEach(sale => {
+    const sd = new Date(sale.created_at);
+    if (sd.getFullYear() !== year) return;
+    const mi = sd.getMonth();
+    months[mi].ca += sale.total || 0;
+    months[mi].nb += 1;
+    (sale.items||[]).forEach(item => {
+      const p = prodMap[item.pid] || prods.find(x => x.nom === item.nom);
+      if (p && p.prix_achat != null) months[mi].dep += p.prix_achat * (item.qty||1);
+    });
+  });
+  return { months, year, dev };
+}
+
+// ── Rendu principal ───────────────────────────────────────────────
+function renderRapports() {
+  rptUpdateArchiveInfo();
+  setRptView(_rptView);
+}
+
+function setRptView(view, btn) {
+  _rptView = view;
+  document.querySelectorAll('.rpt-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else document.getElementById('rpt-tab-' + view)?.classList.add('active');
+  document.getElementById('rpt-view-week').style.display  = view === 'week'  ? '' : 'none';
+  document.getElementById('rpt-view-month').style.display = view === 'month' ? '' : 'none';
+  document.getElementById('rpt-view-year').style.display  = view === 'year'  ? '' : 'none';
+  if (view === 'week')  renderRptWeek();
+  if (view === 'month') renderRptMonth();
+  if (view === 'year')  renderRptYear();
+}
+
+// ── Vue Semaine ────────────────────────────────────────────────────
+const JOURS_FULL = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const MOIS_FR    = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function rptWeekNav(dir) {
+  _rptWeekOffset += dir;
+  const now = new Date();
+  const curMonday = _getMondayOf(0);
+  const maxFuture = 0;
+  if (_rptWeekOffset > maxFuture) { _rptWeekOffset = maxFuture; return; }
+  // Pas plus de 52 semaines en arrière
+  if (_rptWeekOffset < -52) { _rptWeekOffset = -52; return; }
+  renderRptWeek();
+}
+
+function renderRptWeek() {
+  const data = _computeWeek(_rptWeekOffset);
+  if (!data) return;
+  const { days, dev, monday } = data;
+  const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+  const now    = new Date();
+  const today  = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const fmtD   = d => d.toLocaleDateString('fr-FR', {day:'2-digit', month:'short'});
+  const isCurrentWeek = _rptWeekOffset === 0;
+
+  document.getElementById('rpt-week-title').textContent = isCurrentWeek ? 'Semaine en cours' : `Semaine du ${fmtD(monday)}`;
+  document.getElementById('rpt-week-range').textContent = `${fmtD(monday)} — ${fmtD(sunday)}`;
+  document.getElementById('rpt-next-btn').disabled = _rptWeekOffset >= 0;
+  document.getElementById('rpt-prev-btn').disabled = _rptWeekOffset <= -52;
+
+  const totCA  = days.reduce((s,d) => s+d.ca, 0);
+  const totDep = days.reduce((s,d) => s+d.dep, 0);
+  const totMar = totCA - totDep;
+  const totNb  = days.reduce((s,d) => s+d.nb, 0);
+  const maxCA  = Math.max(1, ...days.map(d => d.ca));
+
+  document.getElementById('rpt-kv-ca').textContent  = fmtMoney(totCA, dev);
+  document.getElementById('rpt-kv-dep').textContent = fmtMoney(totDep, dev);
+  document.getElementById('rpt-kv-mar').textContent = (totMar>=0?'+':'')+fmtMoney(totMar, dev);
+  document.getElementById('rpt-kv-mar').style.color = totMar>=0?'#2ECC71':'#E74C3C';
+  document.getElementById('rpt-kv-nb').textContent  = totNb;
+
+  const tbody = document.getElementById('rpt-week-tbody');
+  const hasDep = days.some(d=>d.dep>0);
+
+  tbody.innerHTML = days.map((d, i) => {
+    const isToday  = d.date.toDateString() === today.toDateString() && isCurrentWeek;
+    const isFuture = d.date > today;
+    const marge    = d.ca - d.dep;
+    const margePct = d.ca > 0 && d.dep > 0 ? ((marge/d.ca)*100).toFixed(1) : null;
+    const barPct   = maxCA > 0 ? Math.round((d.ca/maxCA)*100) : 0;
+    const marCls   = marge > 0 ? 'pos' : marge < 0 ? 'neg' : 'zero';
+
+    return `<tr class="${isToday?'today-row':''} ${d.nb===0&&!isToday?'empty-row':''}">
+      <td class="rpt-day-name">${JOURS_FULL[i]}${isToday?'<span class="rpt-today-badge">AUJOURD\'HUI</span>':''}</td>
+      <td class="rpt-ca">${isFuture?'—':fmtMoney(d.ca,dev)}</td>
+      <td class="rpt-dep">${!isFuture&&d.dep>0?fmtMoney(d.dep,dev):'—'}</td>
+      <td class="rpt-mar ${marCls}">${!isFuture&&hasDep&&d.dep>0?(marge>=0?'+':'')+fmtMoney(marge,dev):'—'}</td>
+      <td class="rpt-pct">${margePct!==null?margePct+'%':'—'}</td>
+      <td style="font-weight:600">${isFuture?'—':d.nb}</td>
+      <td class="rpt-bar-cell">
+        <div class="rpt-bar-bg"><div class="rpt-bar-fill" style="width:${isFuture?0:barPct}%"></div></div>
+      </td>
+    </tr>`;
+  }).join('') + `<tr class="total-row">
+    <td><strong>TOTAL</strong></td>
+    <td class="rpt-ca">${fmtMoney(totCA,dev)}</td>
+    <td class="rpt-dep">${hasDep?fmtMoney(totDep,dev):'—'}</td>
+    <td class="rpt-mar ${totMar>=0?'pos':'neg'}">${hasDep?(totMar>=0?'+':'')+fmtMoney(totMar,dev):'—'}</td>
+    <td class="rpt-pct">${totCA>0&&hasDep?((totMar/totCA)*100).toFixed(1)+'%':'—'}</td>
+    <td style="font-weight:700">${totNb}</td>
+    <td></td>
+  </tr>`;
+
+  // Top produits de la semaine
+  const allItems = {};
+  days.forEach(d => Object.entries(d.items).forEach(([nom,v]) => {
+    if(!allItems[nom]) allItems[nom]={qty:0,ca:0};
+    allItems[nom].qty+=v.qty; allItems[nom].ca+=v.ca;
+  }));
+  const top = Object.entries(allItems).sort((a,b)=>b[1].ca-a[1].ca).slice(0,5);
+  const topEl = document.getElementById('rpt-week-top');
+  if(top.length && topEl) {
+    topEl.innerHTML = `<div style="margin-top:12px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r)">
+      <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">🏆 Top produits de la semaine</div>
+      ${top.map(([nom,v],i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <span style="font-size:.83rem"><strong style="color:var(--accent)">#${i+1}</strong> ${nom} <span style="color:var(--text-muted);font-size:.72rem">(${v.qty} vendus)</span></span>
+        <span style="font-family:var(--fh);font-weight:700;color:var(--accent)">${fmtMoney(v.ca,dev)}</span>
+      </div>`).join('')}
+    </div>`;
+  } else if(topEl) topEl.innerHTML='';
+}
+
+// ── Vue Mensuelle ─────────────────────────────────────────────────
+function rptMonthNav(dir) {
+  _rptMonthOffset += dir;
+  if(_rptMonthOffset > 0) {_rptMonthOffset=0;return;}
+  if(_rptMonthOffset < -11) {_rptMonthOffset=-11;return;}
+  renderRptMonth();
+}
+
+function renderRptMonth() {
+  const data = _computeMonth(_rptMonthOffset);
+  if(!data) return;
+  const { weeks, year, month, dev, target } = data;
+  document.getElementById('rpt-month-title').textContent = MOIS_FR[month] + ' ' + year;
+  document.getElementById('rpt-month-next').disabled = _rptMonthOffset >= 0;
+
+  const totCA  = weeks.reduce((s,w)=>s+w.ca,0);
+  const totDep = weeks.reduce((s,w)=>s+w.dep,0);
+  const totMar = totCA-totDep;
+  const totNb  = weeks.reduce((s,w)=>s+w.nb,0);
+  document.getElementById('rpt-mv-ca').textContent  = fmtMoney(totCA,dev);
+  document.getElementById('rpt-mv-dep').textContent = fmtMoney(totDep,dev);
+  document.getElementById('rpt-mv-mar').textContent = (totMar>=0?'+':'')+fmtMoney(totMar,dev);
+  document.getElementById('rpt-mv-mar').style.color = totMar>=0?'#2ECC71':'#E74C3C';
+  document.getElementById('rpt-mv-nb').textContent  = totNb;
+
+  const fmtD = d=>d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
+  const now = new Date();
+  document.getElementById('rpt-month-weeks').innerHTML = weeks.map((w,i)=>{
+    const marge = w.ca-w.dep;
+    const isCur = now>=w.start && now<=w.end;
+    return `<div class="rpt-week-card ${isCur?'current-week':''}" onclick="_rptJumpToWeek(${Math.round((w.start-_getMondayOf(0))/604800000)})">
+      <div class="rpt-wc-label">Sem. ${i+1} · ${fmtD(w.start)}–${fmtD(w.end)}</div>
+      <div class="rpt-wc-ca">${fmtMoney(w.ca,dev)}</div>
+      <div class="rpt-wc-mar ${marge>=0?'pos':'neg'}">${w.dep>0?(marge>=0?'Marge +':'Marge ')+fmtMoney(marge,dev):'Marge non calculée'}</div>
+      <div class="rpt-wc-nb">🛒 ${w.nb} vente${w.nb!==1?'s':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function _rptJumpToWeek(offset) {
+  _rptWeekOffset = offset;
+  setRptView('week');
+}
+
+// ── Vue Annuelle ──────────────────────────────────────────────────
+function rptYearNav(dir) {
+  _rptYearOffset += dir;
+  if(_rptYearOffset > 0) {_rptYearOffset=0;return;}
+  if(_rptYearOffset < -3) {_rptYearOffset=-3;return;}
+  renderRptYear();
+}
+
+function renderRptYear() {
+  const data = _computeYear(_rptYearOffset);
+  if(!data) return;
+  const { months, year, dev } = data;
+  document.getElementById('rpt-year-title').textContent = 'Année ' + year;
+  document.getElementById('rpt-year-next').disabled = _rptYearOffset >= 0;
+
+  const totCA  = months.reduce((s,m)=>s+m.ca,0);
+  const totDep = months.reduce((s,m)=>s+m.dep,0);
+  const totMar = totCA-totDep;
+  const totNb  = months.reduce((s,m)=>s+m.nb,0);
+  document.getElementById('rpt-yv-ca').textContent  = fmtMoney(totCA,dev);
+  document.getElementById('rpt-yv-dep').textContent = fmtMoney(totDep,dev);
+  document.getElementById('rpt-yv-mar').textContent = (totMar>=0?'+':'')+fmtMoney(totMar,dev);
+  document.getElementById('rpt-yv-mar').style.color = totMar>=0?'#2ECC71':'#E74C3C';
+  document.getElementById('rpt-yv-nb').textContent  = totNb;
+  const fmtShort = v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'k':String(Math.round(v));
+  const curM = new Date().getMonth();
+  const curY = new Date().getFullYear();
+  document.getElementById('rpt-year-months').innerHTML = months.map((m,i)=>{
+    const marge = m.ca-m.dep;
+    const isCur = i===curM && year===curY;
+    return `<div class="rpt-month-card ${m.ca>0?'has-data':''} ${isCur?'today-row':''}" onclick="_rptJumpToMonth(${(year-new Date().getFullYear())*12+(i-new Date().getMonth())})">
+      <div class="rpt-mc-name">${MOIS_FR[i].substring(0,4)}</div>
+      <div class="rpt-mc-ca">${m.ca>0?fmtShort(m.ca)+' '+dev:'—'}</div>
+      <div class="rpt-mc-mar ${marge>=0?'pos':'neg'}" style="font-size:.7rem;font-weight:700">${m.dep>0?(marge>=0?'▲':'▼')+fmtShort(Math.abs(marge)):'—'}</div>
+      <div style="font-size:.68rem;color:var(--text-dim)">${m.nb?m.nb+' vte':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function _rptJumpToMonth(offset) {
+  _rptMonthOffset = offset;
+  setRptView('month');
+}
+
+// ── Export CSV ────────────────────────────────────────────────────
+function rptExportCSV() {
+  const m = Auth.current(); if(!m) return;
+  const data = _computeWeek(_rptWeekOffset);
+  if(!data) return;
+  const {days, dev, monday} = data;
+  const sunday = new Date(monday); sunday.setDate(monday.getDate()+6);
+  const fmtD = d => d.toLocaleDateString('fr-FR');
+
+  let csv = '\uFEFF'; // BOM UTF-8
+  csv += `Rapport de ventes — ${m.nom_commerce}\n`;
+  csv += `Semaine du ${fmtD(monday)} au ${fmtD(sunday)}\n\n`;
+  csv += 'Jour,Date,CA ('+dev+'),Dépenses ('+dev+'),Marge brute ('+dev+'),Marge %,Nb ventes\n';
+
+  let totCA=0, totDep=0, totNb=0;
+  days.forEach((d,i) => {
+    const marge = d.ca - d.dep;
+    const pct   = d.ca>0&&d.dep>0 ? ((marge/d.ca)*100).toFixed(1)+'%' : '—';
+    csv += `${JOURS_FULL[i]},${fmtD(d.date)},${d.ca},${d.dep||0},${d.dep>0?marge:''},${pct},${d.nb}\n`;
+    totCA+=d.ca; totDep+=d.dep; totNb+=d.nb;
+  });
+  const totMar = totCA-totDep;
+  csv += `TOTAL,,${totCA},${totDep},${totMar},${ totCA>0?((totMar/totCA)*100).toFixed(1)+'%':'—'},${totNb}\n`;
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `rapport_${m.nom_commerce.replace(/\s+/g,'_')}_${fmtD(monday).replace(/\//g,'-')}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 CSV téléchargé','success');
+}
+
+// ── Impression PDF ────────────────────────────────────────────────
+function rptPrint() {
+  const m   = Auth.current(); if(!m) return;
+  const cfg = getConfig();
+  const data= _computeWeek(_rptWeekOffset);
+  if(!data) return;
+  const {days, dev, monday} = data;
+  const sunday = new Date(monday); sunday.setDate(monday.getDate()+6);
+  const fmtD = d => d.toLocaleDateString('fr-FR');
+  const logo = getLogo();
+  const hasDep = days.some(d=>d.dep>0);
+
+  const totCA  = days.reduce((s,d)=>s+d.ca,0);
+  const totDep = days.reduce((s,d)=>s+d.dep,0);
+  const totMar = totCA-totDep;
+  const totNb  = days.reduce((s,d)=>s+d.nb,0);
+
+  const rows = days.map((d,i)=>{
+    const marge=d.ca-d.dep;
+    const pct=d.ca>0&&d.dep>0?((marge/d.ca)*100).toFixed(1)+'%':'—';
+    return `<tr style="${d.nb===0?'opacity:.4':''}">
+      <td>${JOURS_FULL[i]}</td><td>${fmtD(d.date)}</td>
+      <td style="color:#E8730C;font-weight:700">${fmtMoney(d.ca,dev)}</td>
+      <td style="color:#E74C3C">${d.dep>0?fmtMoney(d.dep,dev):'—'}</td>
+      <td style="color:${marge>=0?'#27AE60':'#E74C3C'};font-weight:700">${hasDep&&d.dep>0?(marge>=0?'+':'')+fmtMoney(marge,dev):'—'}</td>
+      <td>${pct}</td><td style="font-weight:600">${d.nb}</td>
+    </tr>`;
+  }).join('');
+
+  const foot = getTicketFooter(cfg);
+
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
+    <title>Rapport — ${m.nom_commerce}</title>
+    <style>
+      body{font-family:Arial,sans-serif;font-size:11pt;color:#000;margin:20mm 15mm;background:#fff}
+      .hdr{text-align:center;border-bottom:3px solid #E8730C;padding-bottom:14px;margin-bottom:18px}
+      .hdr img{max-height:56px;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto}
+      .hdr h1{font-size:15pt;color:#E8730C;margin:0 0 3px}
+      .hdr p{font-size:9pt;color:#666;margin:2px 0}
+      .kpis{display:flex;gap:12px;margin-bottom:18px}
+      .kpi{flex:1;border:1px solid #ddd;border-radius:6px;padding:10px;text-align:center}
+      .kpi-val{font-size:13pt;font-weight:800;margin-bottom:3px}
+      .kpi-lbl{font-size:8pt;color:#888;text-transform:uppercase;letter-spacing:.05em}
+      .kpi.ca .kpi-val{color:#E8730C}.kpi.mar .kpi-val{color:#27AE60}.kpi.dep .kpi-val{color:#E74C3C}
+      table{width:100%;border-collapse:collapse;margin-bottom:16px}
+      th{background:#FFF3E0;padding:8px 10px;text-align:left;font-size:9pt;border:1px solid #ddd;color:#E8730C}
+      td{padding:8px 10px;border:1px solid #ddd;font-size:10pt}
+      .total-row td{background:#FFF3E0;font-weight:700}
+      .footer{text-align:center;font-size:8pt;color:#999;border-top:1px solid #ddd;padding-top:10px;margin-top:14px}
+      @media print{body{margin:10mm}}
+    </style></head><body>
+    <div class="hdr">
+      ${logo?`<img src="${logo}" alt="logo"/>`:''}
+      <h1>${m.nom_commerce}</h1>
+      <p>${m.proprietaire} · ${m.ville} · ${m.telephone}</p>
+      <p>Rapport de ventes · Semaine du ${fmtD(monday)} au ${fmtD(sunday)}</p>
+      <p style="font-size:8pt;color:#bbb">Généré le ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi ca"><div class="kpi-val">${fmtMoney(totCA,dev)}</div><div class="kpi-lbl">Chiffre d'affaires</div></div>
+      <div class="kpi dep"><div class="kpi-val">${hasDep?fmtMoney(totDep,dev):'—'}</div><div class="kpi-lbl">Dépenses</div></div>
+      <div class="kpi mar"><div class="kpi-val" style="color:${totMar>=0?'#27AE60':'#E74C3C'}">${hasDep?(totMar>=0?'+':'')+fmtMoney(totMar,dev):'—'}</div><div class="kpi-lbl">Marge brute</div></div>
+      <div class="kpi"><div class="kpi-val">${totNb}</div><div class="kpi-lbl">Ventes</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Jour</th><th>Date</th><th>CA</th><th>Dépenses</th><th>Marge</th><th>Marge %</th><th>Ventes</th></tr></thead>
+      <tbody>${rows}
+        <tr class="total-row">
+          <td colspan="2"><strong>TOTAL SEMAINE</strong></td>
+          <td style="color:#E8730C">${fmtMoney(totCA,dev)}</td>
+          <td style="color:#E74C3C">${hasDep?fmtMoney(totDep,dev):'—'}</td>
+          <td style="color:${totMar>=0?'#27AE60':'#E74C3C'}">${hasDep?(totMar>=0?'+':'')+fmtMoney(totMar,dev):'—'}</td>
+          <td>${totCA>0&&hasDep?((totMar/totCA)*100).toFixed(1)+'%':'—'}</td>
+          <td>${totNb}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer">
+      ${foot.lines.length ? foot.lines.join(' · ') : 'Merci pour votre confiance — ' + m.nom_commerce}
+      <br/>Digitale Solution · ${new Date().getFullYear()}
+    </div>
+  </body></html>`;
+
+  const win = window.open('','_blank','width=900,height=700');
+  if(win){ win.document.write(html); win.document.close(); win.focus(); setTimeout(()=>win.print(),600); }
+  else showToast('⚠️ Autoriser les popups pour imprimer','error');
+}
+
+// ── Archivage automatique ─────────────────────────────────────────
+const ARCHIVE_KEY = 'ds_rpt_archive_';
+
+function rptArchiveNow() {
+  const m = Auth.current(); if(!m) return;
+  // Archiver les 52 dernières semaines
+  let count = 0;
+  for(let w = -1; w >= -52; w--) {
+    const data = _computeWeek(w);
+    if(!data) continue;
+    const {days, dev, monday} = data;
+    const totCA = days.reduce((s,d)=>s+d.ca,0);
+    if(totCA === 0) continue; // Skip semaines vides
+    const key = ARCHIVE_KEY + m.id + '_' + monday.toISOString().substring(0,10);
+    const archive = {
+      merchant_id: m.id,
+      week_start: monday.toISOString(),
+      days: days.map(d=>({date:d.date.toISOString(),ca:d.ca,dep:d.dep,nb:d.nb})),
+      totCA, totDep: days.reduce((s,d)=>s+d.dep,0),
+      totNb: days.reduce((s,d)=>s+d.nb,0),
+      archived_at: new Date().toISOString()
+    };
+    localStorage.setItem(key, JSON.stringify(archive));
+    // Sync Firestore
+    if(window._fbDb && typeof FB !== 'undefined') {
+      const docId = m.id + '_' + monday.toISOString().substring(0,10);
+      FB.write('rpt_archives', docId, archive).catch(()=>{});
+    }
+    count++;
+  }
+  // Nettoyer archives > 1 an
+  const oneYearAgo = new Date(); oneYearAgo.setFullYear(oneYearAgo.getFullYear()-1);
+  Object.keys(localStorage).filter(k=>k.startsWith(ARCHIVE_KEY+m.id)).forEach(k=>{
+    try{
+      const arc = JSON.parse(localStorage.getItem(k));
+      if(new Date(arc.week_start) < oneYearAgo) localStorage.removeItem(k);
+    }catch(e){}
+  });
+  localStorage.setItem(ARCHIVE_KEY+m.id+'_last', new Date().toISOString());
+  showToast(`🗄️ ${count} semaine${count!==1?'s':''} archivée${count!==1?'s':''}`, 'success');
+  rptUpdateArchiveInfo();
+}
+
+function rptUpdateArchiveInfo() {
+  const m = Auth.current(); if(!m) return;
+  const lastKey = ARCHIVE_KEY + m.id + '_last';
+  const last = localStorage.getItem(lastKey);
+  const el = document.getElementById('rpt-archive-info');
+  if(el && last) el.textContent = '🗄️ Dernier archivage : ' + new Date(last).toLocaleDateString('fr-FR');
+}
+
+// Auto-archivage au chargement (1x par jour)
+function rptAutoArchive() {
+  const m = Auth.current(); if(!m) return;
+  const lastKey  = ARCHIVE_KEY + m.id + '_last';
+  const lastStr  = localStorage.getItem(lastKey);
+  const today    = new Date().toDateString();
+  if(!lastStr || new Date(lastStr).toDateString() !== today) rptArchiveNow();
+}
 let _statsUnlocked = false;
 let _statsPinEntry  = '';
 
@@ -9213,6 +9979,8 @@ document.addEventListener('DOMContentLoaded', async () => {  console.log('🚀 D
 
   // 3. Init Service Worker (PWA + offline)
   registerServiceWorker().then(reg => {
+    // Auto-archivage des rapports (1x/jour)
+    setTimeout(() => { try { rptAutoArchive(); } catch(e){} }, 3000);
     if (reg) console.log('📲 PWA prête — mode offline disponible');
   });
 
