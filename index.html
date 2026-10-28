@@ -3,12 +3,13 @@
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>Digitale Solution</title>
 
 <!-- ====================== PWA META TAGS ====================== -->
 <meta name="description" content="Point de vente pour commerçants africains — gérez ventes, clients et stock même hors ligne"/>
-<meta name="theme-color" content="#E8730C"/>
+<meta name="theme-color" content="#0F0E0D"/>
+<meta name="color-scheme" content="dark light"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -23,6 +24,8 @@
 <link rel="apple-touch-icon" href="/icon-192.png"/>
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"/>
 <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
 
 <!-- ====================== FIREBASE SDK ====================== -->
@@ -76,7 +79,7 @@ window._fbInit = async function(cfg) {
         console.warn('[Firebase] enablePersistence:', err.code);
       }
     });
-    console.log('\U0001f525 Firebase initialisé — project:', cfg.projectId);
+    console.log('\u{1F525} Firebase initialisé — project:', cfg.projectId);
     window.dispatchEvent(new Event('firebase-sdk-loaded'));
     // Auto-démarrer les listeners si une session marchand est déjà active
     setTimeout(() => {
@@ -100,7 +103,7 @@ window._fbInit = async function(cfg) {
 };
 </script>
 <style>
-/* ================================w.============================
+/* ============================================================
    DIGITALE SOLUTION — CSS
    4 thèmes : light / dark / neon / ocean
    ============================================================ */
@@ -1091,6 +1094,287 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 .ticker-sep{margin:0 24px;opacity:.7}
 
+
+/* ============================================================
+   DESIGN V2 — couche d'amélioration (surcharge non destructive)
+   Contraste AA · cibles tactiles · mobile · icônes SVG · a11y
+   ============================================================ */
+:root{
+  --on-accent:#fff;
+  --ring:0 0 0 3px rgba(232,115,12,.35);
+  --fh:'Syne',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --fb:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+/* Contraste : textes secondaires relevés (WCAG AA) */
+[data-theme="dark"],:root{--text-muted:#A39D97;--text-dim:#857F79;--accent-btn:#C25800}
+[data-theme="light"]{--text-muted:#5C5550;--text-dim:#78706A;--accent:#C75B00;--accent-dark:#A64B00;--accent-btn:#C25800;--ring:0 0 0 3px rgba(199,91,0,.3)}
+[data-theme="neon"]{--text-muted:#8FB8A5;--text-dim:#6A8E7C;--on-accent:#021A10;--accent-btn:#00FFB3;--ring:0 0 0 3px rgba(0,255,179,.35)}
+[data-theme="ocean"]{--text-muted:#8FB4C6;--text-dim:#6C92A6;--on-accent:#021622;--accent-btn:#4FC3F7;--ring:0 0 0 3px rgba(79,195,247,.35)}
+
+/* Base */
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-tap-highlight-color:transparent}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:var(--ring)}
+html{scrollbar-color:var(--surface2) transparent;scrollbar-width:thin}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:8px}
+*::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+
+/* Boutons : texte lisible sur TOUS les thèmes (blanc sur néon/océan = illisible avant) */
+.btn-p{background:var(--accent-btn);color:var(--on-accent);box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 2px 8px rgba(0,0,0,.18);min-height:40px;justify-content:center}
+.btn-p:hover{background:var(--accent-btn);filter:brightness(1.1);transform:translateY(-1px)}
+.btn-p:active{transform:translateY(0) scale(.98);filter:brightness(.95)}
+.btn-p.sm{min-height:34px}
+.btn-g{min-height:40px}
+.btn-g.sm{min-height:34px}
+.btn-p:disabled,.btn-g:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.bdg,.sale-tab.active,.mm-av,.ci-qbtn:hover,.pin-btn:hover{color:var(--on-accent)}
+.mm-av{background:linear-gradient(135deg,var(--accent),var(--accent-dark))}
+
+/* Formulaires */
+.fg label{font-size:.74rem;font-weight:600;letter-spacing:.06em}
+.fg input,.fg select,.fg textarea{min-height:46px;font-size:1rem}
+.ferr{border-left:3px solid var(--danger)}
+
+/* Landing */
+.lnav{padding:14px 40px}
+.hero{padding:88px 32px 72px}
+.hero-badge{background:rgba(232,115,12,.1);color:var(--accent)}
+.hero h1{letter-spacing:-.02em}
+.hero-sub{font-size:1.1rem;color:var(--text-muted);font-weight:400;line-height:1.65}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:-32px auto 44px;max-width:640px}
+.hero-chips span{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:100px}
+.hero-chips svg{width:14px;height:14px;color:var(--success);flex-shrink:0}
+.hero-stats{box-shadow:var(--card-shadow)}
+.hstat{padding:18px 32px}
+.hstat span{font-size:1.6rem}
+.feats{gap:0}
+.feat{padding:36px 28px}
+.feat-ico,.ni-ico{display:inline-flex;align-items:center;justify-content:center}
+.feat-ico{width:48px;height:48px;border-radius:14px;background:rgba(232,115,12,.1);color:var(--accent);margin-bottom:18px;font-size:0}
+[data-theme="neon"] .feat-ico{background:rgba(0,255,179,.08)}
+[data-theme="ocean"] .feat-ico{background:rgba(79,195,247,.08)}
+.feat-ico svg{width:24px;height:24px}
+.feat:hover .feat-ico{transform:translateY(-2px);transition:transform .25s var(--ease)}
+
+/* Auth */
+.auth-li h2{letter-spacing:-.01em}
+.promo-card,.demo-hint{box-shadow:var(--card-shadow)}
+
+/* Sidebar : icônes SVG, état actif en pastille (plus de décalage de padding) */
+.ni{min-height:44px;border-left:none;position:relative}
+.ni-ico{width:22px;height:22px;font-size:0}
+.ni-ico svg{width:20px;height:20px}
+.ni.active{background:rgba(232,115,12,.12);border-left:none;padding-left:16px;color:var(--accent);font-weight:600}
+.ni.active::before{content:'';position:absolute;left:-8px;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+[data-theme="neon"] .ni.active{background:rgba(0,255,179,.08);border-left:none}
+[data-theme="ocean"] .ni.active{background:rgba(79,195,247,.1);border-left:none}
+.nav-grp-lbl{opacity:.75;letter-spacing:.12em}
+.ni-lock{font-size:.62rem;filter:grayscale(1)}
+.sidebar.coll .ni.active::before{left:-8px}
+
+/* Topbar */
+.topbar{padding:12px 32px}
+.tb-l h2{font-size:1.15rem;letter-spacing:-.01em}
+.tp{width:22px;height:22px}
+.tsw-pill{width:26px;height:26px}
+.theme-pills{padding:3px;gap:5px}
+
+/* Dashboard */
+.welcome{border-radius:var(--rlg);padding:26px 30px}
+.kpi{padding:22px;position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:var(--border);transition:background var(--tr)}
+.kpi.acc::after,.kpi:hover::after{background:var(--accent)}
+.kpi-val{font-size:clamp(1.35rem,2.6vw,2rem);letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi-lbl{font-size:.7rem}
+.kpi-sub{color:var(--text-muted)}
+.ri-amt,.ppc-price,.ci-price,.ct-row{font-variant-numeric:tabular-nums}
+
+/* POS */
+.pos-layout{height:calc(100vh - 64px);height:calc(100dvh - 64px)}
+.qr-layout{height:calc(100vh - 64px);height:calc(100dvh - 64px)}
+.ppc{padding:16px 12px;position:relative;min-height:128px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.ppc:hover{box-shadow:var(--shadow-a)}
+.ppc:active{transform:scale(.97)}
+.ppc-stk{color:var(--text-muted)}
+.ci-qbtn{width:32px;height:32px}
+.ci-rm{padding:8px}
+.ct-row.big{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.pos-srch input{min-height:46px}
+
+/* Tableaux & badges */
+.dt th{background:var(--surface2);position:sticky;top:0}
+.dt tbody tr{transition:background .15s}
+.tbtn{min-height:32px}
+.sbdg,.bs{display:inline-block}
+
+/* Modales */
+.mo{backdrop-filter:blur(6px)}
+.modal{max-height:calc(100dvh - 40px);overflow-y:auto}
+
+/* Animations discrètes */
+.section.active{animation:secIn .28s var(--ease)}
+@keyframes secIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ============================ MOBILE ============================ */
+@media(max-width:900px){
+  .sidebar{width:272px;height:100vh;height:100dvh}
+  .sidebar.mob-open{box-shadow:0 0 0 100vmax rgba(0,0,0,.6),var(--shadow)}
+  .mob-menu{width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px;margin-left:-8px}
+  .mob-menu:active{background:var(--surface2)}
+  .pos-layout,.qr-layout{height:auto;min-height:calc(100dvh - 64px)}
+  .pos-cart{border-left:none;border-top:1px solid var(--border);max-height:none}
+  .pos-cat{border-right:none}
+}
+@media(max-width:640px){
+  .lnav{padding:12px 16px}
+  .lnav .nav-acts{gap:8px}
+  .lnav .btn-g{display:none}
+  .lnav .theme-switcher{display:none}
+  .hero{padding:48px 20px 40px}
+  .hero-chips{margin:-20px auto 32px}
+  .hero-cta .btn-p,.hero-cta .btn-g{width:100%;justify-content:center}
+  .hero-stats{width:100%}
+  .hstat{padding:14px 8px;flex:1}
+  .hstat span{font-size:1.2rem}
+  .hstat small{font-size:.68rem}
+  .feat{padding:24px 20px;border-right:none;border-bottom:1px solid var(--border);display:grid;grid-template-columns:48px 1fr;column-gap:16px}
+  .feat-ico{grid-row:span 2;margin:0}
+  .feat h3{margin:2px 0 4px}
+  .auth-l{padding:24px 20px}
+  .topbar .theme-pills,.topbar .cb{display:none}
+  #conn-label{display:none}
+  .tb-l h2{font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}
+  .welcome{padding:18px 20px}
+  .w-ico{font-size:2rem}
+  .kpi{padding:16px}
+  .kpi-grid{gap:10px}
+  .dt{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  .ci-qbtn{width:38px;height:38px;font-size:1.1rem}
+  .tbtn{min-height:38px;padding:6px 12px}
+  .pos-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+  .mo{align-items:flex-end;padding:0}
+  .modal,.modal.wide{max-width:none;border-radius:20px 20px 0 0;max-height:92dvh;animation:sheetIn .25s var(--ease)}
+  @keyframes sheetIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .cancel-motifs{grid-template-columns:1fr}
+}
+
+/* Accessibilité */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+/* ============================================================
+   VENTE RAPIDE — Caisse enregistreuse (qx-*)
+   ============================================================ */
+#s-quick{padding:0}
+.qx{display:grid;grid-template-columns:minmax(0,1fr) 400px;height:calc(100vh - 64px);height:calc(100dvh - 64px)}
+.qx-entry{padding:24px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--border)}
+.qx-entry>*{width:100%;max-width:520px;margin-inline:auto;flex-shrink:0}
+.qx-screen{background:var(--bg);border:1px solid var(--border);border-radius:var(--rlg);padding:14px 20px 12px;box-shadow:inset 0 2px 14px rgba(0,0,0,.25);transition:border-color .2s,box-shadow .2s}
+.qx.pay-mode .qx-screen{opacity:.6}
+.qx-screen.shake{animation:qxShake .25s}
+@keyframes qxShake{20%{transform:translateX(-5px)}60%{transform:translateX(5px)}100%{transform:none}}
+.qx-screen-top{display:flex;justify-content:space-between;gap:12px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700}
+.qx-amount{display:flex;align-items:baseline;justify-content:flex-end;gap:10px;font-family:var(--fh);font-weight:800;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.15;color:var(--accent);font-variant-numeric:tabular-nums;overflow:hidden;white-space:nowrap}
+.qx-amount small{font-size:.9rem;color:var(--text-muted);font-weight:600}
+.qx-qty{font-size:.5em;color:var(--text-muted);margin-right:auto}
+#qr-display.is-empty{opacity:.4}
+.qx-preview{text-align:right;font-size:.85rem;color:var(--text-muted);min-height:1.3em}
+.qx-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.qx-key{min-height:64px;border-radius:14px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--fh);font-size:1.5rem;font-weight:700;transition:transform .08s,background .15s,border-color .15s,color .15s;user-select:none;touch-action:manipulation}
+.qx-key:hover{border-color:var(--accent)}
+.qx-key:active,.qx-key.hit{transform:scale(.94);background:var(--accent-btn);color:var(--on-accent);border-color:transparent}
+.qx-key.fn{font-size:1.25rem;color:var(--text-muted)}
+.qx-key.clr{color:var(--danger)}
+.qx-key.add{background:var(--accent-btn);color:var(--on-accent);border-color:transparent;font-size:1.9rem}
+.qx-key.add:hover{filter:brightness(1.1)}
+.qx-label{background:var(--surface);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);padding:12px 14px;font-size:.9rem;min-height:46px}
+.qx-label:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
+.qx-actions{display:flex;gap:8px;flex-wrap:wrap}
+.qx-actions .btn-g{flex:1;white-space:nowrap}
+.qx-danger{color:var(--danger)}
+.qx-badge{background:var(--accent-btn);color:var(--on-accent);border-radius:100px;padding:1px 7px;font-size:.7rem;margin-left:4px}
+.qx-help{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;font-size:.8rem;color:var(--text-muted)}
+.qx-help summary{cursor:pointer;font-weight:700;color:var(--text);font-size:.82rem}
+.qx-help-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:10px}
+kbd{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.72rem;background:var(--surface2);border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--text)}
+.qx-ticket{display:flex;flex-direction:column;gap:12px;background:var(--surface);padding:20px;min-height:0;overflow-y:auto}
+.qx-ticket .cart-hdr{margin-bottom:0}
+.qx-tape{flex:1;min-height:130px;overflow-y:auto;background:var(--bg);border:1px dashed var(--border);border-radius:var(--rsm);font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+.qx-empty{padding:28px 16px;text-align:center;color:var(--text-muted);font-size:.82rem;line-height:1.8}
+.qx-line{display:grid;grid-template-columns:22px 1fr auto 30px;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px dashed var(--border);font-size:.9rem}
+.qx-line:last-child{border-bottom:none}
+.qx-line.new{animation:qxNew .5s ease-out}
+@keyframes qxNew{from{background:rgba(232,115,12,.3)}to{background:transparent}}
+.qx-n{color:var(--text-dim);font-size:.72rem}
+.qx-d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);font-size:.8rem}
+.qx-d em{display:block;font-style:normal;font-size:.72rem;color:var(--text-dim)}
+.qx-a{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.qx-x{width:30px;height:30px;border-radius:6px;color:var(--text-dim);font-size:.8rem}
+.qx-x:hover{color:var(--danger);background:rgba(231,76,60,.12)}
+.qx-sub{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-muted)}
+.qx-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 16px;border-radius:var(--r);background:linear-gradient(135deg,var(--accent-btn),var(--accent-dark));color:var(--on-accent);font-weight:700;letter-spacing:.04em}
+.qx-total span:last-child{font-family:var(--fh);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:0}
+.qx-pay{background:var(--bg);border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;transition:border-color .2s}
+.qx-pay:focus-within{border-color:var(--accent)}
+.qx-pay.ok{border-color:var(--success)}
+.qx-pay.insuf{border-color:var(--danger)}
+.qx-pay label{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:700;margin-bottom:6px}
+.qx-pay input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);padding:10px 12px;font-size:1.3rem;font-weight:700;font-family:var(--fh);text-align:right;font-variant-numeric:tabular-nums}
+.qx-pay input:focus{outline:none;border-color:var(--accent)}
+.qx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.qx-chips:empty{display:none}
+.qx-chip{padding:6px 12px;min-height:34px;border-radius:100px;border:1px solid var(--border);background:var(--surface2);font-size:.8rem;font-weight:600;color:var(--text);transition:all var(--tr)}
+.qx-chip:hover{border-color:var(--accent);color:var(--accent)}
+.qx-rendu{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:.88rem;color:var(--text-muted)}
+.qx-rendu .rendu-val{font-family:var(--fh);font-weight:800;font-size:1.25rem;color:var(--text);font-variant-numeric:tabular-nums}
+.qx-rendu .rendu-val.ok{color:var(--success)}
+.qx-rendu .rendu-val.insuf{color:var(--danger);font-size:.95rem}
+.qx-kbd-btn{margin-left:8px;opacity:.85;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:inherit}
+#qx-validate:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:640px){.topbar .btn-p.sm{white-space:nowrap}}
+@media(max-width:1100px){.qx{grid-template-columns:minmax(0,1fr) 340px}.qx-help-grid{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .qx{grid-template-columns:1fr;height:auto;min-height:calc(100dvh - 64px)}
+  .qx-entry{border-right:none;padding:16px}
+  .qx-ticket{border-top:1px solid var(--border);overflow:visible}
+  .qx-tape{max-height:240px}
+  .qx-help{display:none}
+  .qx-key{min-height:58px}
+}
+
+/* ---- POS clavier ---- */
+.pos-srch{position:sticky;top:-20px;z-index:5;background:var(--bg);margin:-20px -20px 12px;padding:20px 20px 4px}
+.pos-srch input{margin-bottom:6px}
+.pos-hint{font-size:.76rem;color:var(--text-muted);margin:0 0 4px;min-height:1.2em}
+.pos-cat .qx-help{margin-top:18px}
+.ppc.kbd{border-color:var(--accent);box-shadow:var(--ring),var(--shadow-a);transform:translateY(-2px);background:rgba(232,115,12,.08)}
+[data-theme="neon"] .ppc.kbd{background:rgba(0,255,179,.07)}
+[data-theme="ocean"] .ppc.kbd{background:rgba(79,195,247,.08)}
+.ci.sel{background:rgba(232,115,12,.1);box-shadow:inset 3px 0 0 var(--accent)}
+.pos-pay{margin-bottom:12px;padding:10px 12px}
+.pos-pay input{font-size:1.1rem;padding:8px 12px}
+.pos-pay .qx-rendu .rendu-val{font-size:1.1rem}
+@media(max-width:900px){.pos-cat .qx-help{display:none}.pos-srch{position:static;margin:0 0 8px;padding:0}}
+
+/* ---- Facturation à l'usage ---- */
+.usage-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:18px 22px;margin-bottom:20px;position:relative;overflow:hidden}
+.usage-card::before{content:'';position:absolute;inset:0 auto 0 0;width:4px;background:var(--accent)}
+.usage-hdr{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.usage-hdr h4{font-family:var(--fh);font-size:1rem}
+.usage-month{font-size:.78rem;color:var(--text-muted);text-transform:capitalize}
+.usage-body{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px}
+.usage-val{font-family:var(--fh);font-weight:800;font-size:1.8rem;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
+.usage-val.sm{font-size:1.3rem;color:var(--text)}
+.usage-lbl{font-size:.74rem;color:var(--text-muted);margin-top:4px}
+.usage-note{font-size:.76rem;color:var(--text-muted);margin-top:10px}
+.usage-note:empty{display:none}
+@media(max-width:640px){.usage-body{grid-template-columns:1fr 1fr}.usage-body>div:first-child{grid-column:span 2}}
+.adm-kpi-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 </style>
 
 
@@ -1535,6 +1819,7 @@ async function _fbSyncAll(data) {
       <button class="btn-p xl" onclick="showPage('page-register')">Démarrer gratuitement →</button>
       <button class="btn-g xl" onclick="demoLogin()">Voir la démo</button>
     </div>
+    <div class="hero-chips"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Fonctionne hors ligne</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Impression 58/80 mm</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Reçus WhatsApp</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Installable sur mobile</span></div>
     <div class="hero-stats">
       <div class="hstat"><span>2 500+</span><small>Commerces actifs</small></div>
       <div class="hdiv"></div>
@@ -1544,10 +1829,10 @@ async function _fbSyncAll(data) {
     </div>
   </div>
   <div class="feats">
-    <div class="feat"><span class="feat-ico">🏪</span><h3>Multi-commerces</h3><p>Restaurants, hôtels, boutiques — chaque espace isolé et sécurisé.</p></div>
-    <div class="feat"><span class="feat-ico">📊</span><h3>Dashboard temps réel</h3><p>Suivez vos ventes, CA et clients en un coup d'œil.</p></div>
-    <div class="feat"><span class="feat-ico">🖨️</span><h3>Impression thermique</h3><p>Factures compatibles imprimantes 58mm et 80mm.</p></div>
-    <div class="feat"><span class="feat-ico">💬</span><h3>WhatsApp Marketing</h3><p>Envoyez des messages de remerciement à vos clients automatiquement.</p></div>
+    <div class="feat"><span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg></span><h3>Multi-commerces</h3><p>Restaurants, hôtels, boutiques — chaque espace isolé et sécurisé.</p></div>
+    <div class="feat"><span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><h3>Dashboard temps réel</h3><p>Suivez vos ventes, CA et clients en un coup d'œil.</p></div>
+    <div class="feat"><span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg></span><h3>Impression thermique</h3><p>Factures compatibles imprimantes 58mm et 80mm.</p></div>
+    <div class="feat"><span class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><h3>WhatsApp Marketing</h3><p>Envoyez des messages de remerciement à vos clients automatiquement.</p></div>
   </div>
 </div>
 
@@ -1633,20 +1918,20 @@ async function _fbSyncAll(data) {
     <nav class="sb-nav">
       <!-- GÉRANT — accès libre -->
       <div class="nav-grp-lbl">Vente</div>
-      <button class="ni" onclick="showSection('pos')"      data-s="pos">      <span class="ni-ico">🛒</span><span class="nl">Point de Vente</span></button>
-      <button class="ni" onclick="showSection('quick')"    data-s="quick">   <span class="ni-ico">âš¡</span><span class="nl">Vente Rapide</span></button>
-      <button class="ni" onclick="showSection('serveurs')" data-s="serveurs"><span class="ni-ico">🍽️</span><span class="nl">Commandes Serveurs</span><span id="srv-pending-badge" style="background:var(--warning);color:#000;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:100px;display:none;margin-left:auto">0</span></button>
-      <button class="ni" onclick="showSection('caisse')"   data-s="caisse">  <span class="ni-ico">💰</span><span class="nl">Caisse</span></button>
-      <button class="ni" onclick="showSection('products')" data-s="products"><span class="ni-ico">📦</span><span class="nl">Produits</span></button>
-      <button class="ni" onclick="showSection('mysales')"  data-s="mysales"> <span class="ni-ico">🧾</span><span class="nl">Mes ventes</span><span style="font-size:.6rem;background:rgba(232,115,12,.18);color:var(--accent);padding:1px 6px;border-radius:8px;margin-left:auto">Caissier</span></button>
+      <button class="ni" onclick="showSection('pos')"      data-s="pos">      <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg></span><span class="nl">Point de Vente</span></button>
+      <button class="ni" onclick="showSection('quick')"    data-s="quick">   <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="nl">Vente Rapide</span></button>
+      <button class="ni" onclick="showSection('serveurs')" data-s="serveurs"><span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v8M3 3v5a3 3 0 0 0 6 0V3M6 11v10"/><path d="M17 21V3c-2.5 1.5-4 4-4 7v3h4"/></svg></span><span class="nl">Commandes Serveurs</span><span id="srv-pending-badge" style="background:var(--warning);color:#000;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:100px;display:none;margin-left:auto">0</span></button>
+      <button class="ni" onclick="showSection('caisse')"   data-s="caisse">  <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><circle cx="16.5" cy="14.5" r="1"/></svg></span><span class="nl">Caisse</span></button>
+      <button class="ni" onclick="showSection('products')" data-s="products"><span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span class="nl">Produits</span></button>
+      <button class="ni" onclick="showSection('mysales')"  data-s="mysales"> <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><span class="nl">Mes ventes</span><span style="font-size:.6rem;background:rgba(232,115,12,.18);color:var(--accent);padding:1px 6px;border-radius:8px;margin-left:auto">Caissier</span></button>
       <!-- PROPRIÉTAIRE — PIN requis -->
       <div class="nav-grp-lbl nav-grp-owner">🔐 Propriétaire</div>
-      <button class="ni" onclick="reqPin('dashboard')" data-s="dashboard"><span class="ni-ico">📊</span><span class="nl">Dashboard</span><span class="ni-lock">🔒</span><span class="ni-notif-dot" id="nav-notif-dot" style="display:none"></span></button>
-      <button class="ni" onclick="reqPin('stock')"     data-s="stock">    <span class="ni-ico">🏭</span><span class="nl">Gestion Stock</span><span class="ni-lock">🔒</span></button>
-      <button class="ni" onclick="reqPin('clients')"   data-s="clients">  <span class="ni-ico">👥</span><span class="nl">Clients</span><span class="ni-lock">🔒</span></button>
-      <button class="ni" onclick="reqPin('sales')"     data-s="sales">    <span class="ni-ico">🧾</span><span class="nl">Ventes</span><span class="ni-lock">🔒</span></button>
-      <button class="ni" onclick="openRapports()"      data-s="rapports"> <span class="ni-ico">📈</span><span class="nl">Rapports</span><span class="ni-lock">🔒</span></button>
-      <button class="ni" onclick="reqPin('settings')"  data-s="settings"> <span class="ni-ico">⚙️</span><span class="nl">Paramètres</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="reqPin('dashboard')" data-s="dashboard"><span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span><span class="nl">Dashboard</span><span class="ni-lock">🔒</span><span class="ni-notif-dot" id="nav-notif-dot" style="display:none"></span></button>
+      <button class="ni" onclick="reqPin('stock')"     data-s="stock">    <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5"/></svg></span><span class="nl">Gestion Stock</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="reqPin('clients')"   data-s="clients">  <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.3A6.5 6.5 0 0 1 21.5 20"/></svg></span><span class="nl">Clients</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="reqPin('sales')"     data-s="sales">    <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><span class="nl">Ventes</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="openRapports()"      data-s="rapports"> <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="nl">Rapports</span><span class="ni-lock">🔒</span></button>
+      <button class="ni" onclick="reqPin('settings')"  data-s="settings"> <span class="ni-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><span class="nl">Paramètres</span><span class="ni-lock">🔒</span></button>
     </nav>
     <div class="sb-foot">
       <div class="mm"><div class="mm-av" id="mm-av">A</div><div class="mm-info"><span id="mm-name">—</span><span id="mm-city">—</span></div></div>
@@ -1683,6 +1968,18 @@ async function _fbSyncAll(data) {
     <!-- DASHBOARD -->
     <section id="s-dashboard" class="section">
       <div class="welcome"><div><h3 id="w-msg">Bienvenue !</h3><p id="w-date"></p></div><div class="w-ico">🌍</div></div>
+
+      <!-- Facturation à l'usage -->
+      <div class="usage-card" id="dash-usage">
+        <div class="usage-hdr"><h4>Facturation à l'usage</h4><span class="usage-month" id="usg-month"></span></div>
+        <div class="usage-body">
+          <div><div class="usage-val" id="usg-amount">0 FCFA</div><div class="usage-lbl">À régler ce mois</div></div>
+          <div><div class="usage-val sm" id="usg-count">0</div><div class="usage-lbl">ventes enregistrées</div></div>
+          <div><div class="usage-val sm" id="usg-rate">20 FCFA</div><div class="usage-lbl">par vente</div></div>
+        </div>
+        <p class="usage-note">Chaque vente validée est comptée 20 FCFA. Le compteur repart à zéro au début de chaque mois.</p>
+        <p class="usage-note" id="usg-prev"></p>
+      </div>
 
       <!-- Notifications stock (gérant) -->
       <div class="notif-panel" id="dash-notif-panel" style="display:none">
@@ -1749,8 +2046,21 @@ async function _fbSyncAll(data) {
     <section id="s-pos" class="section active">
       <div class="pos-layout">
         <div class="pos-cat">
-          <div class="pos-srch"><input id="pos-srch" placeholder="🔍 Rechercher un produit..." oninput="renderPOS()"/></div>
+          <div class="pos-srch"><input id="pos-srch" placeholder="🔍 Rechercher un produit… ( / ou F3 )" autocomplete="off" oninput="renderPOS()"/><div class="pos-hint" id="pos-hint"></div></div>
           <div id="pos-grid" class="pos-grid"><p class="empty">Ajoutez des produits d'abord.</p></div>
+          <details class="qx-help" open>
+            <summary>Raccourcis clavier</summary>
+            <div class="qx-help-grid">
+              <span><kbd>/</kbd> ou <kbd>F3</kbd> Rechercher (ou tapez directement)</span>
+              <span><kbd>↑</kbd> <kbd>↓</kbd> Choisir · <kbd>Entrée</kbd> Ajouter</span>
+              <span><kbd>3</kbd><kbd>*</kbd><kbd>coca</kbd> <kbd>Entrée</kbd> = 3 unités</span>
+              <span><kbd>+</kbd> <kbd>-</kbd> Quantité de la ligne · <kbd>Suppr</kbd> Retirer</span>
+              <span><kbd>↑</kbd> <kbd>↓</kbd> (hors recherche) Ligne du panier</span>
+              <span><kbd>F2</kbd> Montant reçu · <kbd>F9</kbd> Client</span>
+              <span><kbd>F8</kbd> Vider le panier</span>
+              <span><kbd>F4</kbd> ou <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> Valider la vente</span>
+            </div>
+          </details>
         </div>
         <div class="pos-cart">
           <div class="cart-hdr"><h3>Panier <span class="bdg" id="cart-cnt">0</span></h3><button class="btn-g sm" onclick="clearCart()">Vider</button></div>
@@ -1762,7 +2072,7 @@ async function _fbSyncAll(data) {
               <label>👤 <span id="cli-header-lbl">Client</span>
                 <span class="cli-preview" id="cli-preview-name"></span>
               </label>
-              <span class="cart-client-toggle">â–¼</span>
+              <span class="cart-client-toggle">▼</span>
             </div>
             <div class="cart-client-body">
               <select id="cart-cli-sel" onchange="onCliSelect()">
@@ -1778,52 +2088,80 @@ async function _fbSyncAll(data) {
             <div class="ct-row"><span>Sous-total</span><span id="cart-sub">0</span></div>
             <div class="ct-row big"><span>TOTAL</span><span id="cart-total">0 FCFA</span></div>
           </div>
-          <button class="btn-p full xl" onclick="processCheckout()">✓ Valider la vente</button>
+          <div class="qx-pay pos-pay" id="pos-pay-box">
+            <label for="pos-recu">Montant reçu <kbd>F2</kbd></label>
+            <input type="text" inputmode="numeric" autocomplete="off" id="pos-recu" placeholder="0" oninput="posRecuInput(this)"/>
+            <div class="qx-chips" id="pos-chips"></div>
+            <div class="qx-rendu"><span>Monnaie à rendre</span><span class="rendu-val" id="pos-rendu-val">—</span></div>
+          </div>
+          <button class="btn-p full xl" onclick="processCheckout()">✓ Valider la vente <kbd class="qx-kbd-btn">F4</kbd></button>
         </div>
       </div>
     </section>
 
     <!-- VENTE RAPIDE -->
     <section id="s-quick" class="section">
-      <div class="qr-layout">
-        <!-- Colonne gauche : clavier -->
-        <div class="qr-left">
-          <p style="font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;font-weight:700">Saisir le montant</p>
-          <div id="qr-display" class="qr-display">0</div>
-          <div class="qr-keypad">
-            <button class="qr-key" onclick="qrKey('7')">7</button>
-            <button class="qr-key" onclick="qrKey('8')">8</button>
-            <button class="qr-key" onclick="qrKey('9')">9</button>
-            <button class="qr-key" onclick="qrKey('4')">4</button>
-            <button class="qr-key" onclick="qrKey('5')">5</button>
-            <button class="qr-key" onclick="qrKey('6')">6</button>
-            <button class="qr-key" onclick="qrKey('1')">1</button>
-            <button class="qr-key" onclick="qrKey('2')">2</button>
-            <button class="qr-key" onclick="qrKey('3')">3</button>
-            <button class="qr-key zero" onclick="qrKey('0')">0</button>
-            <button class="qr-key del" onclick="qrDel()">⌫</button>
+      <div class="qx">
+        <!-- Colonne gauche : écran + pavé -->
+        <div class="qx-entry">
+          <div class="qx-screen">
+            <div class="qx-screen-top"><span id="qx-mode">Saisie du montant</span><span id="qx-last"></span></div>
+            <div class="qx-amount"><span id="qx-qty-line" class="qx-qty"></span><span id="qr-display">0</span><small id="qx-dev">FCFA</small></div>
+            <div class="qx-preview" id="qx-preview">&nbsp;</div>
           </div>
-          <button class="btn-p full qr-add-btn" onclick="qrAddLine()">+ Ajouter la ligne</button>
-          <button class="btn-g full" onclick="qrReset()" style="font-size:.82rem">🗑 Tout effacer</button>
-        </div>
-        <!-- Colonne droite : récapitulatif + impression -->
-        <div class="qr-right">
-          <div class="cart-hdr"><h3>Articles <span class="bdg" id="qr-cnt">0</span></h3></div>
-          <div id="qr-lines" class="qr-lines"><p class="qr-empty">Aucun article</p></div>
-          <div class="qr-tot">
-            <div class="ct-row"><span>Nombre d'articles</span><span id="qr-nb">0</span></div>
-            <div class="ct-row big"><span>TOTAL</span><span id="qr-total">0 FCFA</span></div>
+          <div class="qx-pad">
+            <button class="qx-key" data-k="7">7</button>
+            <button class="qx-key" data-k="8">8</button>
+            <button class="qx-key" data-k="9">9</button>
+            <button class="qx-key fn" data-k="bs" aria-label="Corriger (retour arrière)">⌫</button>
+            <button class="qx-key" data-k="4">4</button>
+            <button class="qx-key" data-k="5">5</button>
+            <button class="qx-key" data-k="6">6</button>
+            <button class="qx-key fn" data-k="mul" aria-label="Quantité">×</button>
+            <button class="qx-key" data-k="1">1</button>
+            <button class="qx-key" data-k="2">2</button>
+            <button class="qx-key" data-k="3">3</button>
+            <button class="qx-key fn clr" data-k="clr" aria-label="Effacer la saisie">C</button>
+            <button class="qx-key" data-k="0">0</button>
+            <button class="qx-key" data-k="00">00</button>
+            <button class="qx-key" data-k="000">000</button>
+            <button class="qx-key add" data-k="add" aria-label="Ajouter la ligne">+</button>
           </div>
-          <!-- Monnaie à rendre -->
-          <div class="qr-monnaie" id="qr-monnaie-box">
-            <label>💵 Montant reçu</label>
-            <input type="number" id="qr-recu" placeholder="0" oninput="qrCalcRendu()" min="0"/>
-            <div class="qr-rendu">
-              <span class="rendu-lbl">Monnaie à rendre</span>
-              <span class="rendu-val" id="qr-rendu-val">—</span>
+          <input id="qx-label" class="qx-label" type="text" maxlength="40" autocomplete="off" placeholder="Libellé de la ligne (optionnel) — touche L"/>
+          <div class="qx-actions">
+            <button class="btn-g sm" onclick="qrHold()">Mettre en attente <b id="qx-held" class="qx-badge" style="display:none">0</b></button>
+            <button class="btn-g sm" onclick="qrResume()">Reprendre</button>
+            <button class="btn-g sm qx-danger" onclick="qrCancelTicket()">Annuler le ticket</button>
+          </div>
+          <details class="qx-help" open>
+            <summary>Raccourcis clavier</summary>
+            <div class="qx-help-grid">
+              <span><kbd>0</kbd>–<kbd>9</kbd> Saisir le montant</span>
+              <span><kbd>K</kbd> ×1 000 (<kbd>5</kbd><kbd>K</kbd> = 5 000)</span>
+              <span><kbd>*</kbd> ou <kbd>X</kbd> Quantité (3 <kbd>*</kbd> 500)</span>
+              <span><kbd>Entrée</kbd> ou <kbd>+</kbd> Ajouter la ligne</span>
+              <span><kbd>Entrée</kbd> (saisie vide) Passer au paiement</span>
+              <span><kbd>⌫</kbd> Corriger · <kbd>Échap</kbd> Effacer</span>
+              <span><kbd>Suppr</kbd> Retirer la dernière ligne</span>
+              <span><kbd>F2</kbd> Montant reçu · <kbd>L</kbd> Libellé</span>
+              <span><kbd>F4</kbd> ou <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> Valider &amp; imprimer</span>
+              <span><kbd>A</kbd> Mettre en attente · <kbd>R</kbd> Reprendre</span>
             </div>
+          </details>
+        </div>
+        <!-- Colonne droite : ticket + paiement -->
+        <div class="qx-ticket">
+          <div class="cart-hdr"><h3>Ticket <span class="bdg" id="qr-cnt">0</span></h3></div>
+          <div id="qr-lines" class="qx-tape"></div>
+          <div class="qx-sub"><span>Articles</span><span id="qr-nb">0</span></div>
+          <div class="qx-total"><span>TOTAL</span><span id="qr-total">0 FCFA</span></div>
+          <div class="qx-pay" id="qr-monnaie-box">
+            <label for="qr-recu">Montant reçu <kbd>F2</kbd></label>
+            <input type="text" inputmode="numeric" autocomplete="off" id="qr-recu" placeholder="0" oninput="qrRecuInput(this)"/>
+            <div class="qx-chips" id="qx-chips"></div>
+            <div class="qx-rendu"><span>Monnaie à rendre</span><span class="rendu-val" id="qr-rendu-val">—</span></div>
           </div>
-          <button class="btn-p full xl" onclick="processQuickSale()">🖨 Valider &amp; Imprimer</button>
+          <button class="btn-p full xl" id="qx-validate" onclick="processQuickSale()">Valider &amp; imprimer <kbd class="qx-kbd-btn">F4</kbd></button>
         </div>
       </div>
     </section>
@@ -2011,7 +2349,7 @@ async function _fbSyncAll(data) {
         <div style="display:flex;gap:8px">
           <select id="stk-filter" onchange="renderStock()" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);padding:8px 12px;font-size:.85rem">
             <option value="">Tout le stock</option>
-            <option value="rupture">â›" Rupture (0)</option>
+            <option value="rupture">⛔ Rupture (0)</option>
             <option value="faible">⚠️ Stock faible (≤5)</option>
             <option value="ok">✅ Stock OK</option>
             <option value="infini">∞ Illimité</option>
@@ -2368,7 +2706,7 @@ async function _fbSyncAll(data) {
       <div class="fg"><label>Type d'opération</label>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
           <button class="fmt-btn active" id="stk-op-add" onclick="setStkOp('add',this)">➕ Entrée</button>
-          <button class="fmt-btn" id="stk-op-sub" onclick="setStkOp('sub',this)">âž– Sortie</button>
+          <button class="fmt-btn" id="stk-op-sub" onclick="setStkOp('sub',this)">➖ Sortie</button>
           <button class="fmt-btn" id="stk-op-set" onclick="setStkOp('set',this)">🎯 Définir</button>
         </div>
       </div>
@@ -2525,6 +2863,7 @@ async function _fbSyncAll(data) {
       <button class="adm-ni" onclick="adminSection('merchants')" data-as="merchants"><span class="adm-ni-ico">🏪</span> Commerces</button>
       <button class="adm-ni" onclick="adminSection('abonnements')" data-as="abonnements" style="border:1px solid rgba(232,115,12,.25);background:rgba(232,115,12,.05);color:#E8730C;margin:2px 0"><span class="adm-ni-ico">🔑</span> <strong>Abonnements</strong> <span id="adm-sub-badge" style="background:#E8730C;color:white;font-size:.6rem;padding:1px 5px;border-radius:100px;margin-left:4px;display:none">0</span></button>
       <button class="adm-ni" onclick="adminSection('payments')" data-as="payments"><span class="adm-ni-ico">💳</span> Paiements <span id="adm-pay-badge" style="background:#E74C3C;color:white;font-size:.6rem;padding:1px 5px;border-radius:100px;margin-left:4px;display:none">0</span></button>
+      <button class="adm-ni" onclick="adminSection('usage')" data-as="usage"><span class="adm-ni-ico">🧮</span> Facturation usage</button>
       <button class="adm-ni" onclick="adminSection('plans')" data-as="plans"><span class="adm-ni-ico">📦</span> Plans & Tarifs</button>
       <button class="adm-ni" onclick="adminSection('config')" data-as="config"><span class="adm-ni-ico">⚙️</span> Configuration</button>
       <button class="adm-ni" onclick="adminSection('developer')" data-as="developer"><span class="adm-ni-ico">🔥</span> Développeur</button>
@@ -2542,7 +2881,7 @@ async function _fbSyncAll(data) {
       <h2 id="adm-title">Vue d'ensemble</h2>
       <div style="display:flex;gap:10px;align-items:center">
         <span id="adm-clock" style="font-size:.78rem;color:#374151"></span>
-        <button class="btn-p sm" onclick="adminSection('payments')">âš¡ Demandes en attente</button>
+        <button class="btn-p sm" onclick="adminSection('payments')">⚡ Demandes en attente</button>
       </div>
     </div>
 
@@ -2553,6 +2892,7 @@ async function _fbSyncAll(data) {
         <div class="adm-kpi green"><div class="adm-kpi-lbl">Actifs</div><div class="adm-kpi-val" id="ak-active">0</div></div>
         <div class="adm-kpi red"><div class="adm-kpi-lbl">Expirés</div><div class="adm-kpi-val" id="ak-expired">0</div></div>
         <div class="adm-kpi blue"><div class="adm-kpi-lbl">Revenus estimés</div><div class="adm-kpi-val" id="ak-revenue">0</div></div>
+        <div class="adm-kpi accent" style="cursor:pointer" onclick="adminSection('usage')"><div class="adm-kpi-lbl">Usage du mois (20 F/vente)</div><div class="adm-kpi-val" id="ak-usage">0</div></div>
       </div>
       <!-- ACCÈS RAPIDE -->
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
@@ -2596,6 +2936,33 @@ async function _fbSyncAll(data) {
           </table>
         </div>
       </div>
+    </div>
+
+    <!-- FACTURATION À L'USAGE -->
+    <div id="as-usage" class="adm-section">
+      <div style="display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+        <select id="usg-month-sel" onchange="renderAdminUsage()" style="background:#0D1117;border:1px solid rgba(255,255,255,0.08);border-radius:7px;color:#E2E8F0;padding:9px 12px;font-size:.85rem;text-transform:capitalize"></select>
+        <span style="background:rgba(232,115,12,.12);border:1px solid rgba(232,115,12,.35);color:#E8730C;border-radius:100px;padding:6px 14px;font-size:.78rem;font-weight:700">Tarif : 20 FCFA par vente</span>
+        <span style="flex:1"></span>
+        <button class="btn-g sm" onclick="renderAdminUsage(true)">🔄 Actualiser</button>
+        <button class="btn-g sm" onclick="usageExportCsv()">⬇ Export CSV</button>
+      </div>
+      <div class="adm-kpi-grid">
+        <div class="adm-kpi accent"><div class="adm-kpi-lbl">Commerces facturés</div><div class="adm-kpi-val" id="usg-k-merch">0</div></div>
+        <div class="adm-kpi blue"><div class="adm-kpi-lbl">Ventes du mois</div><div class="adm-kpi-val" id="usg-k-count">0</div></div>
+        <div class="adm-kpi red"><div class="adm-kpi-lbl">Total à facturer</div><div class="adm-kpi-val" id="usg-k-total">0</div></div>
+        <div class="adm-kpi green"><div class="adm-kpi-lbl">Encaissé</div><div class="adm-kpi-val" id="usg-k-paid">0</div></div>
+      </div>
+      <div class="adm-card">
+        <div class="adm-card-body" style="overflow-x:auto">
+          <table class="adm-tbl">
+            <thead><tr><th>Commerce</th><th>Ville</th><th>Ventes</th><th>Tarif</th><th>Montant</th><th>Annulées</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="usg-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <p style="font-size:.75rem;color:#64748B;margin-top:-8px" id="usg-source"></p>
+      <p style="font-size:.75rem;color:#64748B">Chaque vente validée compte 20 FCFA. Les ventes annulées ne sont pas facturées (colonne « Annulées » pour repérer les abus). Le compteur repart à zéro chaque mois ; les mois passés restent consultables.</p>
     </div>
 
     <!-- ABONNEMENTS -->
@@ -2931,7 +3298,7 @@ async function _fbSyncAll(data) {
       <!-- Statut Supabase -->
       <div class="adm-card" style="margin-bottom:20px;border-color:rgba(62,207,142,0.25)">
         <div class="adm-card-hdr" style="background:rgba(62,207,142,0.05)">
-          <h3>âš¡ Supabase</h3>
+          <h3>⚡ Supabase</h3>
           <span id="adm-sb-status-badge" style="font-size:.75rem;color:#64748B">Non vérifié</span>
         </div>
         <div class="adm-card-body" style="padding:20px">
@@ -3026,7 +3393,7 @@ alter table payments  enable row level security;</pre>
               <div style="font-size:.85rem;font-weight:700;color:#F0EDE8">Synchronisation temps réel</div>
               <div style="font-size:.75rem;color:#64748B;margin-top:2px">Active les listeners <code style="color:#FFA000">onSnapshot</code> Firestore</div>
             </div>
-            <button id="fb-toggle-btn" onclick="toggleFirebaseSync()" style="padding:8px 20px;border-radius:100px;font-size:.82rem;font-weight:700;border:2px solid rgba(255,160,0,0.4);background:rgba(255,160,0,0.08);color:#FFA000;cursor:pointer;transition:all .2s;white-space:nowrap">â–¶ Activer</button>
+            <button id="fb-toggle-btn" onclick="toggleFirebaseSync()" style="padding:8px 20px;border-radius:100px;font-size:.82rem;font-weight:700;border:2px solid rgba(255,160,0,0.4);background:rgba(255,160,0,0.08);color:#FFA000;cursor:pointer;transition:all .2s;white-space:nowrap">▶ Activer</button>
           </div>
 
           <!-- Champs config -->
@@ -3297,13 +3664,14 @@ alter table payments  enable row level security;</pre>
 // ============================================================
 
 // ---- DB ----
+const USAGE_RATE = 20; // FCFA facturés par vente enregistrée (facturation à l'usage)
 const DB = {
   get(t){try{return JSON.parse(localStorage.getItem('ds_'+t)||'[]')}catch{return[]}},
   set(t,d){localStorage.setItem('ds_'+t,JSON.stringify(d))},
   forM(t,mid){return this.get(t).filter(r=>r.merchant_id===mid)},
   insert(t,rec,mid){
     const all=this.get(t);
-    const r={...rec,id:'id_'+Date.now()+'_'+Math.random().toString(36).substr(2,6),merchant_id:mid,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+    const r={...rec,...(t==='sales'&&rec.frais_usage==null?{frais_usage:USAGE_RATE}:{}),id:'id_'+Date.now()+'_'+Math.random().toString(36).substr(2,6),merchant_id:mid,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
     all.push(r);this.set(t,all);
     if(window._fbDb&&typeof FB!=="undefined"&&_fbSyncActive)FB.write(t,r.id,r).catch(()=>{});
     return r;
@@ -3647,7 +4015,7 @@ function showSection(name) {
     }
   }
   document.getElementById('sidebar').classList.remove('mob-open');
-  ({dashboard:renderDashboard,pos:renderPOS,quick:renderQuick,serveurs:()=>{renderSrvOrders();startSrvPoll();},caisse:renderCaisse,products:renderProducts,stock:renderStock,clients:renderClients,sales:renderSales,rapports:renderRapports,settings:renderSettings,mysales:renderMySales})[name]?.();
+  ({dashboard:renderDashboard,pos:()=>{renderPOS();posEnter();},quick:renderQuick,serveurs:()=>{renderSrvOrders();startSrvPoll();},caisse:renderCaisse,products:renderProducts,stock:renderStock,clients:renderClients,sales:renderSales,rapports:renderRapports,settings:renderSettings,mysales:renderMySales})[name]?.();
   if(name!=='serveurs') stopSrvPoll();
   if (typeof updateSubTicker === 'function') updateSubTicker();
 }
@@ -3777,6 +4145,7 @@ function saveMerchantInfo() {
 // ---- DASHBOARD ----
 function renderDashboard() {
   const m = Auth.current(); if (!m) return;
+  renderUsageCard(m);
   const sales = DB.forM('sales', m.id), prods = DB.forM('products', m.id), clis = DB.forM('clients', m.id);
   const cfg = getConfig(), dev = cfg.devise || 'FCFA';
   const validSales = sales.filter(s => s.statut !== 'cancelled');
@@ -4655,13 +5024,15 @@ function renderProducts() {
 
 // ---- POS ----
 let cart = [];
+let posHi = -1;        // produit surligné au clavier
+let posSelPid = null;  // ligne du panier sélectionnée au clavier
 let currentSaleWA = '';
 let currentSaleName = '';
 let currentPrintFmt = 'a4';
 
 function renderPOS() {
   const m = Auth.current(); if (!m) return;
-  const prods = DB.forM('products', m.id), q = (document.getElementById('pos-srch')?.value || '').toLowerCase();
+  const prods = DB.forM('products', m.id), q = posParse().q;
   const f = prods.filter(p => p.nom.toLowerCase().includes(q));
   const dev = getConfig().devise || 'FCFA';
   const catEmos = {boisson:'🥤',plat:'🍽️',dessert:'🍰',pain:'🥖',viande:'🥩',poisson:'🐟',légume:'🥦',électronique:'📱',vêtement:'👕',médicament:'💊',chambre:'🛏️'};
@@ -4676,6 +5047,7 @@ function renderPOS() {
     return '<div class="ppc' + (oos ? ' oos' : '') + '" data-pid="' + p.id + '">' + visual + '<div class="ppc-name">' + p.nom + '</div><div class="ppc-price">' + fmtMoney(p.prix, dev) + '</div>' + (p.stock !== null ? '<div class="ppc-stk">Stock: ' + p.stock + '</div>' : '') + '</div>';
   }).join('') : '<p class="empty">Aucun produit. Ajoutez-en dans Produits.</p>';
   grid.onclick = e => { const c = e.target.closest('.ppc'); if (c && !c.classList.contains('oos')) addToCart(c.dataset.pid); };
+  posApplyHi(true);
   // Fill client select
   fillCliSelect();
 }
@@ -4707,17 +5079,20 @@ function onCliSelect() {
   }
 }
 
-function addToCart(pid) {
+function addToCart(pid, n) {
   const m = Auth.current(); if (!m) return;
   const ps = DB.forM('products', m.id), p = ps.find(x => x.id === pid); if (!p) return;
+  const qn = Math.max(1, parseInt(n, 10) || 1);
   const ex = cart.find(i => i.pid === pid);
-  ex ? ex.qty++ : cart.push({pid, nom:p.nom, prix:p.prix, qty:1});
+  ex ? ex.qty += qn : cart.push({pid, nom:p.nom, prix:p.prix, qty:qn});
+  posSelPid = pid;
   renderCart();
 }
 function updCartQty(pid, d) { const i = cart.find(x => x.pid === pid); if (!i) return; i.qty = Math.max(0, i.qty + d); if (i.qty === 0) cart = cart.filter(x => x.pid !== pid); renderCart(); }
 function rmFromCart(pid) { cart = cart.filter(i => i.pid !== pid); renderCart(); }
 function clearCart() {
-  cart = [];
+  cart = []; posSelPid = null;
+  const rc = document.getElementById('pos-recu'); if (rc) rc.value = '';
   // Réinitialiser le panneau client (replié + champs vidés)
   const panel = document.getElementById('cart-client-panel');
   if (panel) panel.classList.add('collapsed');
@@ -4737,10 +5112,12 @@ function renderCart() {
   document.getElementById('cart-cnt').textContent = cart.reduce((s, i) => s + i.qty, 0);
   document.getElementById('cart-sub').textContent = fmtMoney(tot, dev);
   document.getElementById('cart-total').textContent = fmtMoney(tot, dev);
+  posCalcRendu();
   const list = document.getElementById('cart-items');
-  if (!cart.length) { list.innerHTML = '<p class="empty">Panier vide</p>'; return; }
+  if (!cart.length) { posSelPid = null; list.innerHTML = '<p class="empty">Panier vide</p>'; return; }
+  if (!cart.some(i => i.pid === posSelPid)) posSelPid = cart[cart.length - 1].pid;
   list.innerHTML = cart.map(i =>
-    '<div class="ci"><span class="ci-name">' + i.nom + '</span><div class="ci-ctrls"><button class="ci-qbtn" data-qpid="' + i.pid + '" data-qd="-1">−</button><span class="ci-q">' + i.qty + '</span><button class="ci-qbtn" data-qpid="' + i.pid + '" data-qd="1">+</button></div><span class="ci-price">' + fmtMoney(i.prix * i.qty, dev) + '</span><button class="ci-rm" data-rmpid="' + i.pid + '">✕</button></div>'
+    '<div class="ci' + (i.pid === posSelPid ? ' sel' : '') + '"><span class="ci-name">' + i.nom + '</span><div class="ci-ctrls"><button class="ci-qbtn" data-qpid="' + i.pid + '" data-qd="-1">−</button><span class="ci-q">' + i.qty + '</span><button class="ci-qbtn" data-qpid="' + i.pid + '" data-qd="1">+</button></div><span class="ci-price">' + fmtMoney(i.prix * i.qty, dev) + '</span><button class="ci-rm" data-rmpid="' + i.pid + '">✕</button></div>'
   ).join('');
   list.querySelectorAll('[data-qpid]').forEach(b => b.onclick = () => updCartQty(b.dataset.qpid, parseInt(b.dataset.qd)));
   list.querySelectorAll('[data-rmpid]').forEach(b => b.onclick = () => rmFromCart(b.dataset.rmpid));
@@ -4757,6 +5134,8 @@ function processCheckout() {
   }
   if (!cart.length) { showToast('⚠️ Panier vide', 'error'); return; }
   const cfg = getConfig(), dev = cfg.devise || 'FCFA';
+  const _tot0 = cartTotal(), _recu = posRecuValue();
+  if (_recu > 0 && _recu < _tot0 && !confirm('Montant reçu inférieur au total (' + fmtMoney(_tot0 - _recu, dev) + ' manquant).\nValider quand même ?')) { posFocusRecu(); return; }
   const cliSel = document.getElementById('cart-cli-sel').value;
   let cliNom = document.getElementById('cart-cli-nom').value.trim() || 'Client';
   let cliWA = document.getElementById('cart-cli-wa').value.trim().replace(/\D/g, '');
@@ -4773,7 +5152,7 @@ function processCheckout() {
     }
   }
   const tot = cartTotal();
-  const sale = DB.insert('sales', {client_id:cliId, client_nom:cliNom, client_wa:cliWA, items:JSON.parse(JSON.stringify(cart)), total:tot, devise:dev}, m.id);
+  const sale = DB.insert('sales', Object.assign({client_id:cliId, client_nom:cliNom, client_wa:cliWA, items:JSON.parse(JSON.stringify(cart)), total:tot, devise:dev}, _recu > 0 ? {recu:_recu, rendu:Math.max(0, _recu - tot)} : {}), m.id);
   // Update stocks
   const allP = DB.get('products');
   cart.forEach(ci => { const idx = allP.findIndex(p => p.id === ci.pid && p.merchant_id === m.id); if (idx !== -1 && allP[idx].stock !== null) allP[idx].stock = Math.max(0, allP[idx].stock - ci.qty); });
@@ -4789,6 +5168,7 @@ function processCheckout() {
   currentSaleWA = cliWA;
   currentSaleName = cliNom;
   // Show invoice
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
   setPrintFmt('58');
   showInvoice(sale, m, cfg);
   // Marketing toast
@@ -4813,12 +5193,600 @@ function setPrintFmt(fmt) {
 }
 
 // ============================================================
-// VENTE RAPIDE — Saisie par montant
+// FACTURATION À L'USAGE — 20 FCFA par vente enregistrée
+// Le compteur est calculé à partir des ventes (jamais de double comptage) :
+//  • chaque vente stocke son tarif (frais_usage) au moment de la vente
+//  • les ventes annulées ne sont pas facturées
+//  • le compteur repart à zéro chaque mois (clé AAAA-MM)
 // ============================================================
-let qrLines = [];       // [{dept, montant}]
-let qrCurrent = '0';   // montant en cours de saisie
+function usageMonthKey(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+function usageMonthLabel(key) {
+  var p = key.split('-'); return new Date(+p[0], +p[1] - 1, 1).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+}
+function usageOfSale(s) { return s.frais_usage > 0 ? s.frais_usage : USAGE_RATE; }
+function usageSummary(sales, key) {
+  var count = 0, amount = 0, cancelled = 0;
+  sales.forEach(function (s) {
+    if (usageMonthKey(new Date(s.created_at)) !== key) return;
+    if (s.statut === 'cancelled') { cancelled++; return; }
+    count++; amount += usageOfSale(s);
+  });
+  return { count: count, amount: amount, cancelled: cancelled };
+}
 
-function renderQuick() { /* rien à charger depuis DB */ }
+// ---- Côté commerce : carte sur le tableau de bord ----
+function renderUsageCard(m) {
+  var el = document.getElementById('dash-usage'); if (!el) return;
+  m = m || Auth.current(); if (!m) return;
+  var sales = DB.forM('sales', m.id), now = new Date();
+  var cur = usageSummary(sales, usageMonthKey(now));
+  var prevKey = usageMonthKey(new Date(now.getFullYear(), now.getMonth() - 1, 1));
+  var prev = usageSummary(sales, prevKey);
+  document.getElementById('usg-month').textContent = usageMonthLabel(usageMonthKey(now));
+  document.getElementById('usg-amount').textContent = fmtMoney(cur.amount, 'FCFA');
+  document.getElementById('usg-count').textContent = cur.count;
+  document.getElementById('usg-rate').textContent = fmtMoney(USAGE_RATE, 'FCFA');
+  document.getElementById('usg-prev').textContent = prev.count
+    ? 'Mois dernier (' + usageMonthLabel(prevKey) + ') : ' + prev.count + ' vente' + (prev.count > 1 ? 's' : '') + ' · ' + fmtMoney(prev.amount, 'FCFA')
+    : '';
+}
+
+// ---- Côté admin développeur ----
+var _usageCache = {};
+async function usageLoadAllSales(key, force) {
+  var c = _usageCache[key];
+  if (!force && c && Date.now() - c.ts < 60000) return c.data;
+  var p = key.split('-'), start = new Date(+p[0], +p[1] - 1, 1).toISOString(), end = new Date(+p[0], +p[1], 1).toISOString();
+  var map = {}, merchants = {}, remote = false;
+  DB.get('sales').forEach(function (s) { map[s.id] = s; });
+  DB.get('merchants').forEach(function (m) { merchants[m.id] = m; });
+  if (window._fbDb && typeof FB !== 'undefined' && FB.ready()) {
+    try {
+      var snap = await FB.col('sales').where('created_at', '>=', start).where('created_at', '<', end).get();
+      snap.docs.forEach(function (d) { map[d.id] = Object.assign({ id: d.id }, d.data()); });
+      var all = await FB.getAllMerchants();
+      all.forEach(function (m) { merchants[m.id] = Object.assign({}, merchants[m.id] || {}, m); });
+      remote = true;
+    } catch (e) { console.warn('[Usage] lecture Firestore impossible:', e); }
+  }
+  var data = { sales: Object.keys(map).map(function (k) { return map[k]; }), merchants: merchants, remote: remote };
+  _usageCache[key] = { ts: Date.now(), data: data };
+  return data;
+}
+function usageGroup(data, key) {
+  var by = {};
+  data.sales.forEach(function (s) {
+    if (usageMonthKey(new Date(s.created_at)) !== key || !s.merchant_id) return;
+    var g = by[s.merchant_id] || (by[s.merchant_id] = { count: 0, amount: 0, cancelled: 0 });
+    if (s.statut === 'cancelled') g.cancelled++; else { g.count++; g.amount += usageOfSale(s); }
+  });
+  return by;
+}
+function usagePaidMap() { return ADB.get('usage_paid') || {}; }
+function usageTogglePaid(mid, key, amount, count) {
+  var map = usagePaidMap(), k = mid + '_' + key;
+  var m = DB.get('merchants').find(function (x) { return x.id === mid; });
+  if (map[k]) { delete map[k]; ADB.addActivity('usage', 'Facturation usage ' + key + ' : paiement annulé pour ' + (m ? m.nom_commerce : mid)); }
+  else { map[k] = { paid_at: new Date().toISOString(), amount: amount, count: count }; ADB.addActivity('usage', 'Facturation usage ' + key + ' : ' + fmtMoney(amount, 'FCFA') + ' encaissés de ' + (m ? m.nom_commerce : mid)); }
+  ADB.set('usage_paid', map);
+  renderAdminUsage();
+}
+function usageWaLink(m, key, g) {
+  var tel = String(m.telephone || '').replace(/\D/g, ''); if (tel.length === 8) tel = '226' + tel;
+  var c = ADB.getCfg();
+  var txt = 'Bonjour ' + (m.proprietaire || '') + ', facturation à l\'usage DIGITALE SOLUTION — ' + usageMonthLabel(key) + ' : ' +
+    g.count + ' vente' + (g.count > 1 ? 's' : '') + ' × ' + USAGE_RATE + ' F = ' + fmtMoney(g.amount, 'FCFA') + '. ' +
+    'Paiement : Orange Money ' + (c.orange_num || '') + ' ou Moov Money ' + (c.moov_num || '') + '. Merci !';
+  return 'https://wa.me/' + tel + '?text=' + encodeURIComponent(txt);
+}
+async function renderAdminUsage(force) {
+  var sel = document.getElementById('usg-month-sel'); if (!sel) return;
+  if (!sel.options.length) {
+    var now = new Date();
+    for (var i = 0; i < 12; i++) {
+      var k = usageMonthKey(new Date(now.getFullYear(), now.getMonth() - i, 1)), o = document.createElement('option');
+      o.value = k; o.textContent = usageMonthLabel(k) + (i === 0 ? ' (en cours)' : ''); sel.appendChild(o);
+    }
+  }
+  var key = sel.value || usageMonthKey();
+  var tb = document.getElementById('usg-tbody');
+  tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748B;padding:32px">Chargement…</td></tr>';
+  var data = await usageLoadAllSales(key, force === true);
+  var by = usageGroup(data, key), paid = usagePaidMap();
+  var ids = Object.keys(by).sort(function (a, b) { return by[b].amount - by[a].amount; });
+  var totCount = 0, totAmount = 0, totPaid = 0;
+  window._usageRows = [];
+  tb.innerHTML = ids.length ? ids.map(function (id) {
+    var g = by[id], m = data.merchants[id] || { nom_commerce: '(commerce ' + id.slice(-6) + ')' };
+    var p = paid[id + '_' + key], reste = g.amount - (p ? p.amount : 0);
+    totCount += g.count; totAmount += g.amount; if (p) totPaid += Math.min(p.amount, g.amount);
+    window._usageRows.push([m.nom_commerce || '', m.ville || '', m.telephone || '', g.count, USAGE_RATE, g.amount, g.cancelled, p ? 'Payé' : 'À payer']);
+    var st = p ? (reste > 0 ? '<span style="color:#F59E0B;font-weight:700">Reste ' + fmtMoney(reste, 'FCFA') + '</span>' : '<span style="color:#22C55E;font-weight:700">✓ Payé</span>')
+               : '<span style="color:#EF4444;font-weight:700">À payer</span>';
+    return '<tr><td><strong style="color:#E2E8F0">' + qrEsc(m.nom_commerce || '') + '</strong><br/><span style="font-size:.72rem;color:#475569">' + qrEsc(m.telephone || '') + '</span></td>' +
+      '<td>' + qrEsc(m.ville || '') + '</td>' +
+      '<td style="font-weight:700;font-variant-numeric:tabular-nums">' + g.count + '</td>' +
+      '<td style="color:#64748B">' + USAGE_RATE + ' F</td>' +
+      '<td style="font-weight:800;color:#E8730C;font-variant-numeric:tabular-nums">' + fmtMoney(g.amount, 'FCFA') + '</td>' +
+      '<td style="color:' + (g.cancelled > 3 ? '#F59E0B' : '#64748B') + '">' + g.cancelled + '</td>' +
+      '<td>' + st + '</td>' +
+      '<td style="white-space:nowrap"><button class="btn-g sm" onclick="usageTogglePaid(\'' + id + '\',\'' + key + '\',' + g.amount + ',' + g.count + ')">' + (p ? 'Annuler' : 'Marquer payé') + '</button> ' +
+      (m.telephone ? '<a class="btn-g sm" target="_blank" rel="noopener" href="' + usageWaLink(m, key, g) + '">Rappel WhatsApp</a>' : '') + '</td></tr>';
+  }).join('') : '<tr><td colspan="8" style="text-align:center;color:#64748B;padding:32px">Aucune vente enregistrée sur ' + usageMonthLabel(key) + '.</td></tr>';
+  document.getElementById('usg-k-merch').textContent = ids.length;
+  document.getElementById('usg-k-count').textContent = totCount;
+  document.getElementById('usg-k-total').textContent = fmtMoney(totAmount, 'FCFA');
+  document.getElementById('usg-k-paid').textContent = fmtMoney(totPaid, 'FCFA');
+  document.getElementById('usg-source').textContent = data.remote
+    ? 'Source : Firebase (toutes les ventes synchronisées) + cet appareil'
+    : '⚠ Firebase indisponible : seules les ventes enregistrées sur cet appareil sont comptées';
+}
+function usageExportCsv() {
+  var rows = window._usageRows || []; if (!rows.length) { showAdminToast('Rien à exporter', 'error'); return; }
+  var key = document.getElementById('usg-month-sel').value;
+  var head = ['Commerce', 'Ville', 'Téléphone', 'Ventes', 'Tarif (FCFA)', 'Montant (FCFA)', 'Annulées', 'Statut'];
+  var csv = '\ufeff' + [head].concat(rows).map(function (r) { return r.map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(';'); }).join('\r\n');
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'facturation-usage-' + key + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+async function renderAdminUsageKpi() {
+  var el = document.getElementById('ak-usage'); if (!el) return;
+  var key = usageMonthKey(), data = await usageLoadAllSales(key), by = usageGroup(data, key), t = 0;
+  Object.keys(by).forEach(function (id) { t += by[id].amount; });
+  el.textContent = fmtMoney(t, 'FCFA');
+}
+
+// ============================================================
+// POINT DE VENTE — Saisie clavier + montant reçu / monnaie
+// ============================================================
+function posParse() {
+  var raw = (document.getElementById('pos-srch') ? document.getElementById('pos-srch').value : '') || '';
+  var m = raw.match(/^\s*(\d{1,4})\s*\*\s*(.*)$/);   // « 3*coca » = 3 unités
+  return m ? { qty: Math.max(1, parseInt(m[1], 10)), q: m[2].toLowerCase().trim() } : { qty: 1, q: raw.toLowerCase() };
+}
+function posCards() { return Array.prototype.slice.call(document.querySelectorAll('#pos-grid .ppc')); }
+function posApplyHi(reset) {
+  var cards = posCards(), p = posParse();
+  if (reset) {
+    posHi = -1;
+    if (p.q && cards.length) {
+      posHi = cards.findIndex(function (c) { return !c.classList.contains('oos'); });
+      if (posHi < 0) posHi = 0;
+    }
+  }
+  if (posHi >= cards.length) posHi = cards.length - 1;
+  cards.forEach(function (c, i) { c.classList.toggle('kbd', i === posHi); });
+  if (posHi >= 0 && cards[posHi] && cards[posHi].scrollIntoView) cards[posHi].scrollIntoView({ block: 'nearest' });
+  var h = document.getElementById('pos-hint');
+  if (h) {
+    if (p.qty > 1) h.textContent = p.qty + ' × — Entrée ajoute le produit surligné';
+    else if (p.q) h.textContent = '↑ ↓ choisir · Entrée ajouter au panier';
+    else h.textContent = 'Tapez pour chercher · 3*nom + Entrée = 3 unités';
+  }
+}
+function posMove(d) {
+  var n = posCards().length; if (!n) return;
+  posHi = posHi < 0 ? (d > 0 ? 0 : n - 1) : Math.max(0, Math.min(n - 1, posHi + d));
+  posApplyHi(false);
+}
+function posAddHi() {
+  var c = posCards()[posHi];
+  if (!c) { showToast('⚠️ Aucun produit sélectionné', 'error'); return false; }
+  if (c.classList.contains('oos')) { showToast('⚠️ Produit en rupture de stock', 'error'); return false; }
+  addToCart(c.dataset.pid, posParse().qty);
+  var s = document.getElementById('pos-srch'); s.value = '';
+  renderPOS();
+  return true;
+}
+function posEnter() {
+  // Poste de caisse (souris + clavier) : la recherche est prête dès l'ouverture. Pas sur tactile (évite le clavier virtuel).
+  var s = document.getElementById('pos-srch');
+  if (s && window.matchMedia && window.matchMedia('(pointer:fine)').matches) s.focus();
+}
+function posSelMove(d) {
+  if (!cart.length) return;
+  var i = cart.findIndex(function (x) { return x.pid === posSelPid; });
+  i = Math.max(0, Math.min(cart.length - 1, (i < 0 ? cart.length - 1 : i) + d));
+  posSelPid = cart[i].pid; renderCart();
+  var el = document.querySelector('#cart-items .ci.sel'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+}
+function posQtyDelta(d) {
+  if (!posSelPid) { showToast('⚠️ Panier vide', 'error'); return; }
+  updCartQty(posSelPid, d);
+}
+function posRemoveSel() { if (posSelPid) rmFromCart(posSelPid); }
+function posClearCart() {
+  if (!cart.length) return;
+  if (confirm('Vider le panier ?')) clearCart();
+}
+function posFocusRecu() {
+  var r = document.getElementById('pos-recu'); if (r) { r.focus(); r.select(); }
+}
+
+// ---- Montant reçu / monnaie à rendre ----
+function posRecuValue() { var r = document.getElementById('pos-recu'); return parseInt(((r && r.value) || '').replace(/\D/g, ''), 10) || 0; }
+function posRecuInput(el) {
+  var d = (el.value || '').replace(/\D/g, '').slice(0, 9);
+  el.value = d ? qrFmt(d) : '';
+  posCalcRendu();
+}
+function posSetRecu(v) { var r = document.getElementById('pos-recu'); if (r) r.value = v ? qrFmt(v) : ''; posCalcRendu(); }
+function posCalcRendu() {
+  var box = document.getElementById('pos-pay-box'); if (!box) return;
+  var dev = qrDev(), tot = cartTotal(), recu = posRecuValue();
+  var chips = document.getElementById('pos-chips');
+  if (chips) {
+    chips.innerHTML = (tot > 0 ? '<button class="qx-chip" data-recu="' + tot + '">Exact</button>' : '') +
+      qrChipValues(tot, dev).map(function (v) { return '<button class="qx-chip" data-recu="' + v + '">' + qrFmt(v) + '</button>'; }).join('');
+  }
+  var val = document.getElementById('pos-rendu-val');
+  if (!recu) { val.textContent = '—'; val.className = 'rendu-val'; box.className = 'qx-pay pos-pay'; return; }
+  var rendu = recu - tot;
+  if (rendu < 0) { val.textContent = fmtMoney(-rendu, dev) + ' manquant'; val.className = 'rendu-val insuf'; box.className = 'qx-pay pos-pay insuf'; }
+  else { val.textContent = fmtMoney(rendu, dev); val.className = 'rendu-val ok'; box.className = 'qx-pay pos-pay ok'; }
+}
+
+// ---- Clavier physique du Point de Vente ----
+document.addEventListener('keydown', function (e) {
+  var sec = document.getElementById('s-pos');
+  if (!sec || !sec.classList.contains('active') || qrBlocked()) return;
+  var k = e.key, t = e.target, tag = (t.tagName || '').toLowerCase();
+  var typing = tag === 'input' || tag === 'textarea' || tag === 'select' || t.isContentEditable;
+
+  // Raccourcis valables partout (même dans un champ)
+  if (k === 'F4' || (e.ctrlKey && k === 'Enter')) { e.preventDefault(); processCheckout(); return; }
+  if (k === 'F2') { e.preventDefault(); posFocusRecu(); return; }
+  if (k === 'F3' || (k === '/' && !typing)) { e.preventDefault(); var s = document.getElementById('pos-srch'); s.focus(); s.select(); return; }
+  if (k === 'F8') { e.preventDefault(); posClearCart(); return; }
+  if (k === 'F9') {
+    e.preventDefault();
+    var panel = document.getElementById('cart-client-panel'); if (panel) panel.classList.remove('collapsed');
+    var n = document.getElementById('cart-cli-nom'); if (n) n.focus();
+    return;
+  }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (t.id === 'pos-srch') {
+    if (k === 'ArrowDown') { e.preventDefault(); posMove(1); }
+    else if (k === 'ArrowUp') { e.preventDefault(); posMove(-1); }
+    else if (k === 'Enter') {
+      e.preventDefault();
+      if (posParse().q || posHi >= 0) posAddHi();
+      else if (cart.length) posFocusRecu();
+      else showToast('Tapez un produit puis Entrée', 'error');
+    }
+    else if (k === 'Escape') { e.preventDefault(); if (t.value) { t.value = ''; renderPOS(); } else t.blur(); }
+    return;
+  }
+  if (t.id === 'pos-recu') {
+    if (k === 'Enter') { e.preventDefault(); processCheckout(); }
+    else if (k === 'Escape') { e.preventDefault(); t.blur(); var s2 = document.getElementById('pos-srch'); if (s2) s2.focus(); }
+    return;
+  }
+  if (typing) return;
+  if (tag === 'button' && (k === 'Enter' || k === ' ') && t.matches(':focus-visible')) return;
+  if (!(t === document.body || sec.contains(t) || (t.closest && t.closest('.sidebar')))) return;
+
+  if (k === '+' || k === '=') { e.preventDefault(); posQtyDelta(1); }
+  else if (k === '-' || k === '_') { e.preventDefault(); posQtyDelta(-1); }
+  else if (k === 'ArrowDown' && cart.length) { e.preventDefault(); posSelMove(1); }
+  else if (k === 'ArrowUp' && cart.length) { e.preventDefault(); posSelMove(-1); }
+  else if (k === 'Delete') { e.preventDefault(); posRemoveSel(); }
+  else if (k === 'Enter') { e.preventDefault(); if (!e.repeat) { if (cart.length) posFocusRecu(); else document.getElementById('pos-srch').focus(); } }
+  else if (k.length === 1 && /[\p{L}\p{N}]/u.test(k)) {
+    // Saisie « au vol » : le caractère tapé part dans la recherche
+    document.getElementById('pos-srch').focus();
+  }
+});
+// Souris : suggestions de montant reçu, et le focus reste dans la recherche
+document.addEventListener('mousedown', function (e) {
+  if (e.target.closest && e.target.closest('#pos-chips .qx-chip')) e.preventDefault();
+});
+document.addEventListener('click', function (e) {
+  var chip = e.target.closest && e.target.closest('#pos-chips .qx-chip');
+  if (chip) posSetRecu(parseInt(chip.dataset.recu, 10) || 0);
+});
+
+// ============================================================
+// VENTE RAPIDE — Caisse enregistreuse
+// Pavé tactile + clavier physique (pavé numérique ou rangée de chiffres)
+// ============================================================
+let qrLines = [];      // [{dept, montant (prix unitaire), qty}]
+let qrCurrent = '0';   // montant en cours de saisie
+let qrQty = 1;         // quantité en cours (touche × / *)
+const QR_MAXLEN = 9;
+
+function qrFmt(n) { return Math.round(Number(n) || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+function qrDev() { try { return (getConfig() && getConfig().devise) || 'FCFA'; } catch (e) { return 'FCFA'; } }
+function qrTotal() { return qrLines.reduce(function (s, l) { return s + l.montant * (l.qty || 1); }, 0); }
+function qrEsc(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+function qrRecuValue() { return parseInt((document.getElementById('qr-recu').value || '').replace(/\D/g, ''), 10) || 0; }
+
+function renderQuick() {
+  // Rend le focus à la page : le clavier physique est actif dès l'ouverture, sans clic préalable
+  var a = document.activeElement;
+  if (a && a !== document.body && a.blur) a.blur();
+  qrUpdateDisplay(); qrRenderLines(); qrUpdateHeld(); qrCalcRendu();
+}
+
+// ---------- Écran de saisie ----------
+function qrUpdateDisplay() {
+  var amt = parseInt(qrCurrent, 10) || 0, dev = qrDev();
+  var d = document.getElementById('qr-display');
+  d.textContent = qrFmt(amt);
+  d.classList.toggle('is-empty', !amt);
+  document.getElementById('qx-dev').textContent = dev;
+  document.getElementById('qx-qty-line').textContent = qrQty > 1 ? qrQty + ' ×' : '';
+  var pv = document.getElementById('qx-preview'), txt = '\u00A0';
+  if (amt > 0) txt = qrQty > 1 ? qrQty + ' × ' + qrFmt(amt) + ' = ' + fmtMoney(qrQty * amt, dev) : 'Entrée pour ajouter la ligne';
+  else if (qrQty > 1) txt = 'Saisissez maintenant le prix unitaire';
+  pv.textContent = txt;
+}
+function qrFlash(k) {
+  var el = document.querySelector('#s-quick .qx-key[data-k="' + k + '"]');
+  if (!el) return;
+  el.classList.add('hit'); setTimeout(function () { el.classList.remove('hit'); }, 130);
+}
+function qrShake() {
+  var s = document.querySelector('#s-quick .qx-screen'); if (!s) return;
+  s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake');
+}
+
+// ---------- Saisie ----------
+function qrKey(d) {
+  d = String(d);
+  if (qrCurrent === '0') { if (/^0+$/.test(d)) return; qrCurrent = d; }
+  else if (qrCurrent.length + d.length <= QR_MAXLEN) qrCurrent += d;
+  else { qrShake(); return; }
+  qrUpdateDisplay();
+}
+function qrThousand() {
+  if (qrCurrent === '0') return;
+  if (qrCurrent.length + 3 > QR_MAXLEN) { qrShake(); return; }
+  qrCurrent += '000'; qrUpdateDisplay();
+}
+function qrDel() {
+  if (qrCurrent !== '0') qrCurrent = qrCurrent.length > 1 ? qrCurrent.slice(0, -1) : '0';
+  else if (qrQty > 1) qrQty = 1;
+  qrUpdateDisplay();
+}
+function qrClearEntry() { qrCurrent = '0'; qrQty = 1; qrUpdateDisplay(); }
+function qrMul() {
+  var n = parseInt(qrCurrent, 10) || 0;
+  if (n < 1 || n > 9999) { showToast('⚠️ Saisissez d\'abord la quantité, puis ×', 'error'); qrShake(); return; }
+  qrQty = n; qrCurrent = '0'; qrUpdateDisplay();
+}
+
+// ---------- Lignes du ticket ----------
+function qrAddLine() {
+  var amt = parseInt(qrCurrent, 10) || 0;
+  if (amt <= 0) { showToast('⚠️ Montant invalide', 'error'); qrShake(); return false; }
+  var lab = document.getElementById('qx-label');
+  var name = (lab.value || '').replace(/[<>&"]/g, '').trim().slice(0, 40) || 'DEPT001';
+  qrLines.push({ dept: name, montant: amt, qty: qrQty });
+  qrCurrent = '0'; qrQty = 1; lab.value = '';
+  qrUpdateDisplay(); qrRenderLines(true); qrCalcRendu();
+  return true;
+}
+function qrRemoveLine(idx) { qrLines.splice(idx, 1); qrRenderLines(); qrCalcRendu(); }
+function qrRemoveLast() {
+  if (!qrLines.length) { showToast('⚠️ Aucune ligne à retirer', 'error'); return; }
+  qrRemoveLine(qrLines.length - 1);
+}
+function qrReset() {
+  qrLines = []; qrCurrent = '0'; qrQty = 1;
+  var lab = document.getElementById('qx-label'); if (lab) lab.value = '';
+  var r = document.getElementById('qr-recu'); if (r) r.value = '';
+  qrUpdateDisplay(); qrRenderLines(); qrCalcRendu();
+}
+function qrCancelTicket() {
+  if (!qrLines.length && (parseInt(qrCurrent, 10) || 0) === 0) { qrReset(); return; }
+  if (qrLines.length && !confirm('Annuler le ticket en cours ?')) return;
+  qrReset(); showToast('🗑 Ticket annulé', 'success');
+}
+function qrRenderLines(isNew) {
+  var dev = qrDev(), total = qrTotal();
+  var nbArt = qrLines.reduce(function (s, l) { return s + (l.qty || 1); }, 0);
+  document.getElementById('qr-cnt').textContent = qrLines.length;
+  document.getElementById('qr-nb').textContent = nbArt;
+  document.getElementById('qr-total').textContent = fmtMoney(total, dev);
+  var last = document.getElementById('qx-last');
+  if (last) last.textContent = qrLines.length ? 'Dernière ligne : ' + qrFmt(qrLines[qrLines.length - 1].montant * (qrLines[qrLines.length - 1].qty || 1)) : '';
+  var el = document.getElementById('qr-lines');
+  if (!qrLines.length) { el.innerHTML = '<p class="qx-empty">Ticket vide.<br>Tapez un montant puis <kbd>Entrée</kbd>.</p>'; return; }
+  el.innerHTML = qrLines.map(function (l, i) {
+    var q = l.qty || 1, sub = l.montant * q;
+    var cls = 'qx-line' + (isNew && i === qrLines.length - 1 ? ' new' : '');
+    return '<div class="' + cls + '"><span class="qx-n">' + (i + 1) + '</span>' +
+      '<span class="qx-d">' + qrEsc(l.dept) + (q > 1 ? '<em>' + q + ' × ' + qrFmt(l.montant) + '</em>' : '') + '</span>' +
+      '<span class="qx-a">' + qrFmt(sub) + '</span>' +
+      '<button class="qx-x" data-del="' + i + '" aria-label="Supprimer la ligne ' + (i + 1) + '">✕</button></div>';
+  }).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+// ---------- Mise en attente ----------
+function qrHeldKey() { var m = Auth.current(); return 'qr_held_' + (m ? m.id : 'x'); }
+function qrGetHeld() { try { return JSON.parse(localStorage.getItem(qrHeldKey())) || []; } catch (e) { return []; } }
+function qrSetHeld(a) { try { localStorage.setItem(qrHeldKey(), JSON.stringify(a)); } catch (e) {} }
+function qrUpdateHeld() {
+  var n = qrGetHeld().length, b = document.getElementById('qx-held');
+  if (!b) return; b.textContent = n; b.style.display = n ? 'inline-block' : 'none';
+}
+function qrHold() {
+  if (!qrLines.length) { showToast('⚠️ Ticket vide : rien à mettre en attente', 'error'); return; }
+  var h = qrGetHeld(); h.push({ lines: qrLines, at: Date.now() }); qrSetHeld(h);
+  qrReset(); qrUpdateHeld();
+  showToast('⏸ Ticket mis en attente (' + h.length + ')', 'success');
+}
+function qrResume() {
+  var h = qrGetHeld();
+  if (!h.length) { showToast('Aucun ticket en attente', 'error'); return; }
+  if (qrLines.length) { showToast('⚠️ Terminez ou mettez en attente le ticket en cours', 'error'); return; }
+  var t = h.pop(); qrSetHeld(h);
+  qrLines = t.lines || []; qrUpdateHeld(); qrRenderLines(); qrCalcRendu();
+  showToast('▶ Ticket repris', 'success');
+}
+
+// ---------- Paiement / monnaie ----------
+function qrRecuInput(el) {
+  var digits = (el.value || '').replace(/\D/g, '').slice(0, QR_MAXLEN);
+  el.value = digits ? qrFmt(digits) : '';
+  qrCalcRendu();
+}
+function qrSetRecu(v) {
+  document.getElementById('qr-recu').value = v ? qrFmt(v) : '';
+  qrCalcRendu();
+}
+function qrChipValues(total, dev) {
+  if (total <= 0) return [];
+  var steps = /cfa|xof|xaf/i.test(dev) ? [500, 1000, 2000, 5000, 10000] : [5, 10, 20, 50, 100];
+  var set = {};
+  steps.forEach(function (s) { var v = Math.ceil(total / s) * s; if (v > total) set[v] = 1; });
+  return Object.keys(set).map(Number).sort(function (a, b) { return a - b; }).slice(0, 4);
+}
+function qrCalcRendu() {
+  var dev = qrDev(), total = qrTotal(), recu = qrRecuValue();
+  var box = document.getElementById('qr-monnaie-box'), val = document.getElementById('qr-rendu-val');
+  var chips = document.getElementById('qx-chips');
+  if (chips) {
+    var cv = qrChipValues(total, dev);
+    chips.innerHTML = (total > 0 ? '<button class="qx-chip" data-recu="' + total + '">Exact</button>' : '') +
+      cv.map(function (v) { return '<button class="qx-chip" data-recu="' + v + '">' + qrFmt(v) + '</button>'; }).join('');
+  }
+  var btn = document.getElementById('qx-validate'); if (btn) btn.disabled = !qrLines.length && !(parseInt(qrCurrent, 10) > 0);
+  if (!recu) { val.textContent = '—'; val.className = 'rendu-val'; box.className = 'qx-pay'; return; }
+  var rendu = recu - total;
+  if (rendu < 0) {
+    val.textContent = fmtMoney(Math.abs(rendu), dev) + ' manquant';
+    val.className = 'rendu-val insuf'; box.className = 'qx-pay insuf';
+  } else {
+    val.textContent = fmtMoney(rendu, dev);
+    val.className = 'rendu-val ok'; box.className = 'qx-pay ok';
+  }
+}
+
+// ---------- Validation ----------
+function processQuickSale() {
+  const m = Auth.current(); if (!m) return;
+  const licSt = getLicStatus(m).st;
+  if (licSt === 'expired' || licSt === 'suspended') {
+    showToast('⚠️ Licence expirée. Renouvelez votre abonnement.', 'error');
+    openPaymentPage(); return;
+  }
+  // Un montant tapé mais pas encore ajouté est ajouté automatiquement (rien n'est perdu)
+  if ((parseInt(qrCurrent, 10) || 0) > 0) qrAddLine();
+  if (!qrLines.length) { showToast('⚠️ Aucun article saisi', 'error'); return; }
+  const cfg = getConfig(), dev = cfg?.devise || 'FCFA';
+  const total = qrTotal(), recu = qrRecuValue();
+  if (recu > 0 && recu < total && !confirm('Montant reçu inférieur au total (' + fmtMoney(total - recu, dev) + ' manquant).\nValider quand même ?')) {
+    document.getElementById('qr-recu').focus(); return;
+  }
+  const items = qrLines.map(l => ({ nom: l.dept, prix: l.montant, qty: l.qty || 1 }));
+  const sale = DB.insert('sales', Object.assign({
+    client_id: '', client_nom: 'Client', client_wa: '',
+    items, total, devise: dev
+  }, recu > 0 ? { recu: recu, rendu: Math.max(0, recu - total) } : {}), m.id);
+  // Sync en arrière-plan
+  API.post('sync', { merchant_id: m.id, collection: 'sales', item: sale }).catch(() => {});
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  // Afficher ticket thermique 80mm
+  setPrintFmt('80');
+  showInvoice(sale, m, cfg);
+  showToast('✅ Vente enregistrée !', 'success');
+  qrReset();
+  renderDashboard();
+}
+
+// ---------- Clavier physique ----------
+function qrBlocked() {
+  if (document.querySelector('.mo:not(.hidden)')) return true;                      // modale ouverte
+  // Panneaux plein écran créés dynamiquement (Premium, recherche…) et overlay PIN : seulement s'ils sont visibles
+  var fx = document.querySelectorAll('body > div[style*="position:fixed"][style*="z-index:9999"], #dev-pin-overlay');
+  for (var i = 0; i < fx.length; i++) { if (getComputedStyle(fx[i]).display !== 'none') return true; }
+  return false;
+}
+function qrEnter() {
+  if ((parseInt(qrCurrent, 10) || 0) > 0) { qrAddLine(); return; }
+  if (qrLines.length) { var r = document.getElementById('qr-recu'); r.focus(); r.select(); }
+  else showToast('Tapez un montant puis Entrée', 'error');
+}
+function qrPress(k) {
+  if (/^\d+$/.test(k)) qrKey(k);
+  else if (k === 'bs') qrDel();
+  else if (k === 'mul') qrMul();
+  else if (k === 'clr') qrClearEntry();
+  else if (k === 'add') qrAddLine();
+}
+
+document.addEventListener('keydown', function (e) {
+  var sec = document.getElementById('s-quick');
+  if (!sec || !sec.classList.contains('active') || qrBlocked()) return;
+  var k = e.key, t = e.target, tag = (t.tagName || '').toLowerCase();
+
+  // Raccourcis valables partout dans la caisse (même dans un champ)
+  if (k === 'F4' || (e.ctrlKey && k === 'Enter')) { e.preventDefault(); processQuickSale(); return; }
+  if (k === 'F2') { e.preventDefault(); var r = document.getElementById('qr-recu'); r.focus(); r.select(); return; }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  // Champ « montant reçu »
+  if (t.id === 'qr-recu') {
+    if (k === 'Enter') { e.preventDefault(); processQuickSale(); }
+    else if (k === 'Escape') { e.preventDefault(); t.blur(); }
+    return;
+  }
+  // Autres champs : on ne touche à rien (sauf Entrée dans le libellé)
+  if (tag === 'input' || tag === 'textarea' || tag === 'select' || t.isContentEditable) {
+    if (t.id === 'qx-label' && (k === 'Enter' || k === 'Escape')) { e.preventDefault(); t.blur(); }
+    return;
+  }
+  // Navigation clavier native (Tab + Entrée sur un bouton) préservée
+  if (tag === 'button' && (k === 'Enter' || k === ' ') && t.matches(':focus-visible')) return;
+  if (!(t === document.body || sec.contains(t) || (t.closest && t.closest('.sidebar')))) return;
+
+  if (/^[0-9]$/.test(k)) { e.preventDefault(); qrKey(k); qrFlash(k); }
+  else if (k === 'k' || k === 'K') { e.preventDefault(); qrThousand(); qrFlash('000'); }
+  else if (k === 'Backspace') { e.preventDefault(); qrDel(); qrFlash('bs'); }
+  else if (k === 'Escape') { e.preventDefault(); qrClearEntry(); qrFlash('clr'); }
+  else if (k === '*' || k === 'x' || k === 'X') { e.preventDefault(); qrMul(); qrFlash('mul'); }
+  else if (k === '+') { e.preventDefault(); if (!e.repeat) { qrAddLine(); qrFlash('add'); } }
+  else if (k === 'Enter') { e.preventDefault(); if (!e.repeat) { qrEnter(); qrFlash('add'); } }
+  else if (k === 'Delete') { e.preventDefault(); qrRemoveLast(); }
+  else if (k === 'a' || k === 'A') { e.preventDefault(); qrHold(); }
+  else if (k === 'r' || k === 'R') { e.preventDefault(); qrResume(); }
+  else if (k === 'l' || k === 'L') { e.preventDefault(); document.getElementById('qx-label').focus(); }
+});
+
+// Souris / tactile : pavé, suggestions de paiement, suppression de ligne
+document.addEventListener('mousedown', function (e) {
+  // Garde le focus hors des boutons : le clavier physique reste actif après un clic
+  if (e.target.closest && e.target.closest('#s-quick .qx-key, #s-quick .qx-chip, #s-quick .qx-x')) e.preventDefault();
+});
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var key = e.target.closest('#s-quick .qx-key');
+  if (key) { var a = document.activeElement; if (a && a.id === 'qr-recu') a.blur(); qrPress(key.dataset.k); return; }
+  var chip = e.target.closest('#s-quick .qx-chip');
+  if (chip) { qrSetRecu(parseInt(chip.dataset.recu, 10) || 0); return; }
+  var del = e.target.closest('#qr-lines [data-del]');
+  if (del) qrRemoveLine(parseInt(del.dataset.del, 10));
+});
+// Indicateur de mode (montant / paiement)
+document.addEventListener('focusin', function (e) {
+  var q = document.querySelector('#s-quick .qx'); if (!q) return;
+  var pay = e.target && e.target.id === 'qr-recu';
+  q.classList.toggle('pay-mode', pay);
+  var m = document.getElementById('qx-mode'); if (m) m.textContent = pay ? 'Saisie du montant reçu' : 'Saisie du montant';
+});
+document.addEventListener('focusout', function (e) {
+  if (e.target && e.target.id === 'qr-recu') {
+    var q = document.querySelector('#s-quick .qx'); if (q) q.classList.remove('pay-mode');
+    var m = document.getElementById('qx-mode'); if (m) m.textContent = 'Saisie du montant';
+  }
+});
+
+
 
 // ============================================================
 // VENTES CAISSIER — "Mes ventes" accessible sans PIN
@@ -4886,59 +5854,6 @@ function renderMySales() {
 }
 
 
-
-function qrKey(digit) {
-  if (qrCurrent === '0') qrCurrent = digit;
-  else if (qrCurrent.length < 9) qrCurrent += digit;
-  document.getElementById('qr-display').textContent = parseInt(qrCurrent).toLocaleString('fr-FR');
-}
-
-function qrDel() {
-  qrCurrent = qrCurrent.length > 1 ? qrCurrent.slice(0, -1) : '0';
-  document.getElementById('qr-display').textContent = parseInt(qrCurrent).toLocaleString('fr-FR');
-}
-
-function qrAddLine() {
-  const amt = parseInt(qrCurrent);
-  if (!amt || amt <= 0) { showToast('⚠️ Montant invalide', 'error'); return; }
-  qrLines.push({ dept: 'DEPT001', montant: amt });
-  qrCurrent = '0';
-  document.getElementById('qr-display').textContent = '0';
-  qrRenderLines();
-}
-
-function qrRemoveLine(idx) {
-  qrLines.splice(idx, 1);
-  qrRenderLines();
-}
-
-function qrReset() {
-  qrLines = [];
-  qrCurrent = '0';
-  document.getElementById('qr-display').textContent = '0';
-  qrRenderLines();
-}
-
-function qrRenderLines() {
-  const m = Auth.current();
-  const dev = (m ? getConfig()?.devise : null) || 'FCFA';
-  const total = qrLines.reduce((s, l) => s + l.montant, 0);
-  document.getElementById('qr-cnt').textContent = qrLines.length;
-  document.getElementById('qr-nb').textContent = qrLines.length;
-  document.getElementById('qr-total').textContent = fmtMoney(total, dev);
-  const el = document.getElementById('qr-lines');
-  if (!qrLines.length) {
-    el.innerHTML = '<p class="qr-empty">Aucun article</p>';
-    return;
-  }
-  el.innerHTML = qrLines.map((l, i) =>
-    '<div class="qr-line">' +
-      '<span class="ql-dept">' + l.dept + '</span>' +
-      '<span class="ql-amt">·' + l.montant.toLocaleString('fr-FR') + '</span>' +
-      '<button class="ql-del" onclick="qrRemoveLine(' + i + ')">✕</button>' +
-    '</div>'
-  ).join('');
-}
 
 // ============================================================
 // GESTION DE CAISSE
@@ -5042,54 +5957,6 @@ function imprimerRapport() {
   setPrintFmt('80');
 }
 
-// ---- MONNAIE À RENDRE (Vente Rapide) ----
-function qrCalcRendu() {
-  const dev = getConfig()?.devise || 'FCFA';
-  const total = qrLines.reduce((s, l) => s + l.montant, 0);
-  const recu = parseInt(document.getElementById('qr-recu').value) || 0;
-  const box = document.getElementById('qr-monnaie-box');
-  const val = document.getElementById('qr-rendu-val');
-  if (!recu) { val.textContent = '—'; val.className = 'rendu-val'; box.className = 'qr-monnaie'; return; }
-  const rendu = recu - total;
-  if (rendu < 0) {
-    val.textContent = 'Insuffisant (' + fmtMoney(Math.abs(rendu), dev) + ' manquant)';
-    val.className = 'rendu-val insuf';
-    box.className = 'qr-monnaie insuf';
-  } else {
-    val.textContent = fmtMoney(rendu, dev);
-    val.className = 'rendu-val ok';
-    box.className = 'qr-monnaie ok';
-  }
-}
-
-
-function processQuickSale() {
-  const m = Auth.current(); if (!m) return;
-  const licSt = getLicStatus(m).st;
-  if (licSt === 'expired' || licSt === 'suspended') {
-    showToast('⚠️ Licence expirée. Renouvelez votre abonnement.', 'error');
-    openPaymentPage(); return;
-  }
-  if (!qrLines.length) { showToast('⚠️ Aucun article saisi', 'error'); return; }
-  const cfg = getConfig(), dev = cfg?.devise || 'FCFA';
-  const items = qrLines.map(l => ({ nom: l.dept, prix: l.montant, qty: 1 }));
-  const total = qrLines.reduce((s, l) => s + l.montant, 0);
-  const sale = DB.insert('sales', {
-    client_id: '', client_nom: 'Client', client_wa: '',
-    items, total, devise: dev
-  }, m.id);
-  // Sync en arrière-plan
-  API.post('sync', { merchant_id: m.id, collection: 'sales', item: sale }).catch(() => {});
-  // Afficher ticket thermique 80mm
-  setPrintFmt('80');
-  showInvoice(sale, m, cfg);
-  showToast('✅ Vente enregistrée !', 'success');
-  qrReset();
-  document.getElementById('qr-recu').value = '';
-  qrCalcRendu();
-  renderDashboard();
-}
-
 /** Formate une date ISO en "JJ mois AAAA à HH:MM" — sans dépendance locale navigateur */
 function fmtDateFR(isoStr) {
   const d = new Date(isoStr);
@@ -5157,6 +6024,7 @@ function buildA4Invoice(sale, m, cfg, num, ds, dev, waNum) {
     '<table class="inv-tbl"><thead><tr><th>Description</th><th style="text-align:center">Qté</th><th>P.U.</th><th style="text-align:right">Total</th></tr></thead><tbody>' +
     (sale.items || []).map(i => '<tr><td>' + i.nom + '</td><td style="text-align:center">' + i.qty + '</td><td>' + fmtMoney(i.prix, dev) + '</td><td style="text-align:right"><strong>' + fmtMoney(i.prix * i.qty, dev) + '</strong></td></tr>').join('') +
     '</tbody></table><div class="inv-total"><span>TOTAL À PAYER</span><span>' + fmtMoney(sale.total, dev) + '</span></div>' +
+    (sale.recu > 0 ? '<div style="display:flex;justify-content:space-between;font-size:.9rem;color:#444;padding:8px 4px 0"><span>Montant reçu</span><strong>' + fmtMoney(sale.recu, dev) + '</strong></div><div style="display:flex;justify-content:space-between;font-size:.9rem;color:#444;padding:4px 4px 0"><span>Monnaie rendue</span><strong>' + fmtMoney(sale.rendu || 0, dev) + '</strong></div>' : '') +
     '<div class="inv-foot">' + (foot.lines.length ? '' : 'Merci pour votre confiance · ' + m.nom_commerce + ' · ') + 'Digitale Solution' + footHtml + '</div></div></div>';
 }
 
@@ -5214,6 +6082,7 @@ function buildThermalInvoice(sale, m, cfg, num, ds, dev, waNum, fmt) {
     ${items}
     ${sep()}
     ${rowHtml('TOTAL', fmtMoney(sale.total, dev), true)}
+    ${sale.recu > 0 ? rowHtml('Reçu', fmtMoney(sale.recu, dev), false) + rowHtml('Monnaie rendue', fmtMoney(sale.rendu || 0, dev), false) : ''}
     ${cancelledStamp}
     ${footBlock}
     ${foot.sepStr ? sm(foot.sepStr) : ''}
@@ -6330,7 +7199,7 @@ function renderStock() {
     if (p.stock === null) {
       statusHtml = '<span class="sbdg s-ok">∞ Illimité</span>'; statusOrder = 3;
     } else if (p.stock === 0) {
-      statusHtml = '<span class="sbdg s-zero">â›" Rupture</span>'; statusOrder = 0;
+      statusHtml = '<span class="sbdg s-zero">⛔ Rupture</span>'; statusOrder = 0;
     } else if (p.stock <= 5) {
       statusHtml = '<span class="sbdg s-low">⚠️ Faible</span>'; statusOrder = 1;
     } else {
@@ -6524,9 +7393,9 @@ function adminSection(name){
   document.querySelectorAll('.adm-ni').forEach(n=>n.classList.remove('active'));
   document.getElementById('as-'+name)?.classList.add('active');
   document.querySelector('[data-as="'+name+'"]')?.classList.add('active');
-  const titles={overview:'Vue d\'ensemble',merchants:'Gestion des commerces',abonnements:'Gestion des abonnements',payments:'Demandes de paiement',plans:'Plans & Tarifs',config:'Configuration',developer:'Développeur — Supabase',activity:'Journal d\'activité'};
+  const titles={overview:'Vue d\'ensemble',merchants:'Gestion des commerces',abonnements:'Gestion des abonnements',payments:'Demandes de paiement',plans:'Plans & Tarifs',config:'Configuration',usage:"Facturation à l'usage",developer:'Développeur — Supabase',activity:'Journal d\'activité'};
   document.getElementById('adm-title').textContent = titles[name]||name;
-  const renders={overview:renderAdminOverview,merchants:renderAdminMerchants,abonnements:renderSubList,payments:renderAdminPayments,plans:renderAdminPlans,config:renderAdminConfig,developer:renderAdminDeveloper,activity:renderAdminActivity};
+  const renders={overview:renderAdminOverview,merchants:renderAdminMerchants,abonnements:renderSubList,payments:renderAdminPayments,plans:renderAdminPlans,config:renderAdminConfig,developer:renderAdminDeveloper,activity:renderAdminActivity,usage:renderAdminUsage};
   renders[name]?.();
 }
 
@@ -7162,6 +8031,7 @@ function renderAdminOverview(){
   const payReqs=ADB.getPayReqs().filter(r=>r.statut==='pending').slice(0,3);
   document.getElementById('ak-pay-preview').innerHTML=payReqs.length?payReqs.map(r=>buildPayReqCard(r,true)).join('')+'<div style="padding:10px 16px;border-top:1px solid rgba(255,255,255,0.04)"><button class="btn-g sm" onclick="adminSection(\'payments\')">Voir toutes les demandes →</button></div>':'<p style="padding:16px;color:#374151;font-size:.82rem">Aucune demande en attente.</p>';
   updatePayBadge();
+  renderAdminUsageKpi();
 }
 
 // ---- MERCHANTS ----
@@ -7988,11 +8858,11 @@ function updateFirebaseBadge() {
   } else if (FB.ready()) {
     badge.textContent = '⏳ Configuré — inactif';
     badge.style.cssText = 'font-size:.75rem;padding:3px 10px;border-radius:100px;background:rgba(79,195,247,0.1);color:#4FC3F7';
-    if (btn) { btn.textContent = 'â–¶ Activer'; btn.style.background = 'rgba(255,160,0,0.08)'; btn.style.borderColor = 'rgba(255,160,0,0.4)'; btn.style.color = '#FFA000'; }
+    if (btn) { btn.textContent = '▶ Activer'; btn.style.background = 'rgba(255,160,0,0.08)'; btn.style.borderColor = 'rgba(255,160,0,0.4)'; btn.style.color = '#FFA000'; }
   } else {
     badge.textContent = '⚙️ Non configuré';
     badge.style.cssText = 'font-size:.75rem;padding:3px 10px;border-radius:100px;background:rgba(100,116,139,0.15);color:#64748B';
-    if (btn) { btn.textContent = 'â–¶ Activer'; btn.style.background = 'rgba(255,160,0,0.08)'; btn.style.borderColor = 'rgba(255,160,0,0.4)'; btn.style.color = '#FFA000'; }
+    if (btn) { btn.textContent = '▶ Activer'; btn.style.background = 'rgba(255,160,0,0.08)'; btn.style.borderColor = 'rgba(255,160,0,0.4)'; btn.style.color = '#FFA000'; }
   }
 }
 
